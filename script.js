@@ -6,8 +6,8 @@
    1) CONFIGURACIÓN  ←  EDITA AQUÍ
    ------------------------------------------------------------- */
 const CONFIG = {
-  // ↓↓↓ REEMPLAZA por el número real de WhatsApp (formato: 57 + número, sin +, espacios ni guiones)
-  whatsapp: "573000000000",
+  // Número de WhatsApp (formato: 57 + número, sin +, espacios ni guiones)
+  whatsapp: "573145093256",
   instagram: "https://www.instagram.com/samira.bienestar/",
 };
 
