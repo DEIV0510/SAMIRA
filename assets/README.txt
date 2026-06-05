@@ -1,6 +1,10 @@
-Coloca aquí los logos de SAMIRA:
+Logos de SAMIRA (ya configurados):
 
-1. logo.png         → tu logo a color (encabezado). Preferible con fondo transparente.
-2. logo-blanco.png  → (opcional) versión blanca/clara para el pie de página oscuro.
+- logo.png         → logo a color, fondo transparente (encabezado). Generado del logo original.
+- logo-blanco.png  → versión crema, fondo transparente (pie de página oscuro).
 
-Si no agregas estos archivos, la página usa un logo de respaldo en SVG y no se rompe.
+Se recortó la frase inferior ("Bienestar desde adentro") para que se lea bien a tamaño pequeño;
+esa frase sigue apareciendo como texto en la pantalla de carga.
+
+¿Quieres cambiar el logo? Reemplaza estos dos archivos (mismo nombre, fondo transparente) o
+envíame el nuevo y lo proceso.
