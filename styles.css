@@ -99,7 +99,7 @@ em{font-style:italic;color:var(--sage)}
 
 /* logo real revelándose con destello dorado */
 .pl-real-wrap{position:relative;display:inline-block;line-height:0;margin-bottom:6px}
-.pl-real{width:clamp(200px,46vw,310px);height:auto;display:block;
+.pl-real{width:clamp(220px,52vw,344px);height:auto;display:block;
   filter:drop-shadow(0 16px 28px rgba(46,70,54,.18));
   clip-path:inset(0 100% 0 0);
   animation:plDraw 1.3s cubic-bezier(.5,0,.12,1) .25s forwards}
@@ -107,7 +107,7 @@ em{font-style:italic;color:var(--sage)}
 .pl-shine{position:absolute;inset:0;pointer-events:none;
   background:linear-gradient(100deg,transparent 38%,rgba(255,255,255,.85) 47%,rgba(216,191,148,.7) 52%,transparent 62%);
   background-size:260% 100%;background-repeat:no-repeat;background-position:130% 0;
-  -webkit-mask:url("assets/logo.png") center/contain no-repeat;mask:url("assets/logo.png") center/contain no-repeat;
+  -webkit-mask:url("assets/logo-full.png") center/contain no-repeat;mask:url("assets/logo-full.png") center/contain no-repeat;
   mix-blend-mode:screen;opacity:0;
   animation:plShine 1.15s ease 1.55s forwards}
 @keyframes plShine{0%{opacity:0;background-position:130% 0}18%{opacity:1}82%{opacity:1}100%{opacity:0;background-position:-30% 0}}

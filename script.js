@@ -53,16 +53,13 @@ const $$ = (s, c=document) => [...c.querySelectorAll(s)];
    ============================================================ */
 (function preloader(){
   const pre = $("#preloader");
-  const tag = $("#plTag");
   const bar = $("#plBar");
   const pct = $("#plPct");
   if(!pre) return;
 
   document.body.style.overflow = "hidden";
 
-  // la revelación del logo y el destello son 100% CSS; aquí solo tagline + progreso
-  setTimeout(() => tag.classList.add("is-on"), reduceMotion ? 0 : 1400);
-
+  // la revelación del logo (barrido) y el destello dorado son 100% CSS; aquí solo el progreso
   const DURATION = reduceMotion ? 600
     : (location.search.includes("slow") ? 11000 : 3000);
   let startT = null, done = false;
