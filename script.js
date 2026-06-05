@@ -49,44 +49,22 @@ const $  = (s, c=document) => c.querySelector(s);
 const $$ = (s, c=document) => [...c.querySelectorAll(s)];
 
 /* ============================================================
-   2) PRELOADER — el logo se dibuja trazo a trazo y luego se rellena
+   2) PRELOADER — el logo real se revela con un destello dorado
    ============================================================ */
 (function preloader(){
-  const pre    = $("#preloader");
-  const sketch = $("#plSketch");
-  const word   = $("#plWord");
-  const tag    = $("#plTag");
-  const bar    = $("#plBar");
-  const pct    = $("#plPct");
+  const pre = $("#preloader");
+  const tag = $("#plTag");
+  const bar = $("#plBar");
+  const pct = $("#plPct");
   if(!pre) return;
 
   document.body.style.overflow = "hidden";
 
-  // dibujar los trazos del emblema (stroke-dashoffset)
-  const paths = $$(".pl-path", sketch);
-  let drawEnd = 0;
-  paths.forEach((p, i) => {
-    const L = p.getTotalLength();
-    p.style.strokeDasharray  = L;
-    p.style.strokeDashoffset = reduceMotion ? 0 : L;
-    const delay = i * 0.16, dur = 0.9;
-    p.style.transition = `stroke-dashoffset ${dur}s cubic-bezier(.22,1,.36,1) ${delay}s`;
-    drawEnd = Math.max(drawEnd, (delay + dur) * 1000);
-  });
-  if(!reduceMotion){
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-      paths.forEach(p => { p.style.strokeDashoffset = 0; });
-    }));
-  }
+  // la revelación del logo y el destello son 100% CSS; aquí solo tagline + progreso
+  setTimeout(() => tag.classList.add("is-on"), reduceMotion ? 0 : 1400);
 
-  const t0 = reduceMotion ? 0 : drawEnd;
-  setTimeout(() => sketch.classList.add("is-filled"), Math.max(0, t0 - 250)); // rellenar
-  setTimeout(() => word.classList.add("is-on"),       Math.max(0, t0 - 120)); // SAMIRA
-  setTimeout(() => tag.classList.add("is-on"),        t0 + 220);              // tagline
-
-  // barra de progreso
   const DURATION = reduceMotion ? 600
-    : (location.search.includes("slow") ? 11000 : Math.max(2600, t0 + 700));
+    : (location.search.includes("slow") ? 11000 : 3000);
   let startT = null, done = false;
   function finish(){
     if(done) return; done = true;
