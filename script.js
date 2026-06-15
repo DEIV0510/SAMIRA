@@ -28,9 +28,6 @@ const PRODUCTS = [
   { type:"jar", name:"Multivitamínico Mujer", short:"MULTIVIT", sub:"MUJER",
     desc:"Vitaminas y minerales esenciales, pensados para el cuerpo y el ritmo de la mujer.",
     chips:["Vitalidad","Inmunidad"], price:"74.900", tag:"Esencial", accent:"#34503D" },
-  { type:"bottle", name:"Vitamina D3 + K2", short:"VIT D3", sub:"+ K2",
-    desc:"Huesos fuertes, defensas en equilibrio y mejor ánimo durante todo el año.",
-    chips:["Huesos","Defensas"], price:"64.900", accent:"#34503D" },
 ];
 
 const TESTIMONIALS = [

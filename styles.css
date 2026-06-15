@@ -99,11 +99,11 @@ em{font-style:italic;color:var(--sage)}
 
 /* logo real revelándose con destello dorado */
 .pl-real-wrap{position:relative;display:inline-block;line-height:0;margin-bottom:6px}
-.pl-real{width:clamp(220px,52vw,344px);height:auto;display:block;
+.pl-real{width:clamp(220px,52vw,330px);height:auto;display:block;
   filter:drop-shadow(0 16px 28px rgba(46,70,54,.18));
-  clip-path:inset(0 100% 0 0);
-  animation:plDraw 1.3s cubic-bezier(.5,0,.12,1) .25s forwards}
-@keyframes plDraw{to{clip-path:inset(0 0 0 0)}}
+  opacity:0;transform:translateY(10px) scale(.96);
+  animation:plReveal .9s cubic-bezier(.22,1,.36,1) .15s forwards}
+@keyframes plReveal{to{opacity:1;transform:none}}
 .pl-shine{position:absolute;inset:0;pointer-events:none;
   background:linear-gradient(100deg,transparent 38%,rgba(255,255,255,.85) 47%,rgba(216,191,148,.7) 52%,transparent 62%);
   background-size:260% 100%;background-repeat:no-repeat;background-position:130% 0;
@@ -246,12 +246,13 @@ em{font-style:italic;color:var(--sage)}
 /* ============================================================
    PRODUCTS
    ============================================================ */
-.products__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(18px,2.4vw,28px)}
+.products__grid{display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(18px,2.4vw,28px)}
 .pcard{
   position:relative;background:var(--white);border-radius:var(--radius-lg);padding:30px 26px 26px;
   border:1px solid rgba(46,70,54,.07);box-shadow:var(--shadow-sm);overflow:hidden;
   transition:transform .5s var(--ease),box-shadow .5s var(--ease);
   display:flex;flex-direction:column;
+  flex:0 1 330px;
 }
 .pcard::before{content:"";position:absolute;inset:0;background:radial-gradient(120% 80% at 50% 0%,var(--pc,rgba(157,184,154,.18)),transparent 60%);opacity:0;transition:opacity .5s}
 .pcard:hover{transform:translateY(-8px);box-shadow:var(--shadow)}
@@ -470,8 +471,32 @@ em{font-style:italic;color:var(--sage)}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
   .reveal{opacity:1!important;transform:none!important}
-  .pl-real{clip-path:none!important}
+  .pl-real{opacity:1!important;transform:none!important}
   .pl-shine{display:none!important}
-  .pl-tag{opacity:1!important;transform:none!important}
   .cursor{display:none!important}
+}
+
+/* ============================================================
+   TRUST STRIP (venta)
+   ============================================================ */
+.trust{max-width:var(--container);margin-inline:auto;padding:clamp(36px,6vw,72px) clamp(20px,5vw,40px)}
+.trust__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,3vw,44px)}
+.trust__item{text-align:center;padding:6px}
+.trust__ico{display:inline-grid;place-items:center;width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,rgba(110,139,110,.16),rgba(194,163,107,.18));margin-bottom:16px}
+.trust__ico svg{width:30px;height:30px;fill:none;stroke:var(--forest);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.trust__item h3{font-size:1.4rem;margin-bottom:.25em}
+.trust__item p{font-size:.94rem;color:var(--muted);max-width:32ch;margin-inline:auto}
+@media (max-width:760px){.trust__grid{grid-template-columns:1fr;gap:30px}}
+
+/* ============================================================
+   FOOTER LEAN
+   ============================================================ */
+.footer--lean .footer__inner{max-width:var(--container);margin-inline:auto;display:flex;flex-wrap:wrap;
+  align-items:center;justify-content:space-between;gap:22px;padding-bottom:28px;border-bottom:1px solid rgba(244,242,234,.12)}
+.footer__links{display:flex;flex-wrap:wrap;gap:1.5rem}
+.footer__links a{color:rgba(244,242,234,.82);font-size:.96rem;transition:color .3s}
+.footer__links a:hover{color:var(--gold-soft)}
+@media (max-width:560px){
+  .footer--lean .footer__inner{flex-direction:column;text-align:center}
+  .footer__links{justify-content:center}
 }
