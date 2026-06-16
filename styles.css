@@ -735,8 +735,8 @@ body.cart-open{overflow:hidden}
 
 .stage__glow{animation:pulseGlow 5s var(--ease-soft) infinite}
 
-/* productos con profundidad + reflejo */
-.hero__prod{-webkit-box-reflect:below 2px linear-gradient(transparent 56%,rgba(255,255,255,.22))}
+/* productos con profundidad */
+.hero__prod{-webkit-box-reflect:none}
 .hero__prod--main{animation:bob3dC 4.2s var(--ease-soft) infinite}
 .hero__prod--left{animation:bob3dL 5.2s var(--ease-soft) infinite}
 .hero__prod--right{animation:bob3dR 5.8s var(--ease-soft) .4s infinite}
