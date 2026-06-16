@@ -174,6 +174,8 @@ burger?.addEventListener("click", () => {
   document.body.classList.toggle("menu-open", open);
 });
 $$("#nav a").forEach(a => a.addEventListener("click", closeMenu));
+$("#navClose")?.addEventListener("click", closeMenu);
+addEventListener("keydown", e => { if(e.key === "Escape") closeMenu(); });
 toTop?.addEventListener("click", () => scrollTo({top:0, behavior: reduceMotion ? "auto":"smooth"}));
 
 /* ============================================================

@@ -163,6 +163,8 @@ em{font-style:italic;color:var(--sage)}
 .nav a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--gold);transition:width .35s var(--ease)}
 .nav a:hover{opacity:1}
 .nav a:hover::after{width:100%}
+.nav__close{display:none}
+.nav__cta,.nav a[href="#inicio"]{display:none}
 
 .header__actions{display:flex;align-items:center;gap:1rem}
 .header__cta{font-size:.86rem}
@@ -443,11 +445,26 @@ em{font-style:italic;color:var(--sage)}
 }
 
 @media (max-width:760px){
-  .nav{position:fixed;inset:0 0 0 auto;width:min(80vw,340px);background:var(--cream);
-    flex-direction:column;justify-content:center;gap:1.6rem;padding:40px;
-    transform:translateX(100%);transition:transform .5s var(--ease);box-shadow:var(--shadow-lg);z-index:130}
-  .nav.is-open{transform:none}
-  .nav a{font-size:1.5rem;font-family:var(--font-serif)}
+  .nav{position:fixed;inset:0;width:100%;height:100dvh;z-index:250;
+    flex-direction:column;justify-content:center;align-items:center;gap:1.5rem;padding:40px;
+    background:radial-gradient(130% 80% at 85% 4%,rgba(143,207,174,.28),transparent 55%),radial-gradient(120% 80% at 5% 100%,rgba(232,137,107,.22),transparent 55%),var(--cream);
+    transform:translateX(100%);opacity:0;visibility:hidden;
+    transition:transform .55s var(--ease),opacity .4s ease,visibility .4s}
+  .nav.is-open{transform:none;opacity:1;visibility:visible}
+  .nav a[href="#inicio"]{display:block}
+  .nav a:not(.btn){font-size:2.2rem;font-family:var(--font-serif);color:var(--forest);
+    opacity:0;transform:translateY(18px);transition:opacity .5s var(--ease),transform .5s var(--ease)}
+  .nav a:not(.btn)::after{display:none}
+  .nav.is-open a:not(.btn){opacity:1;transform:none}
+  .nav.is-open a:nth-of-type(2){transition-delay:.07s}
+  .nav.is-open a:nth-of-type(3){transition-delay:.14s}
+  .nav__close{display:grid;place-items:center;position:absolute;top:18px;right:18px;width:48px;height:48px;
+    border-radius:50%;color:var(--forest);background:rgba(46,70,54,.07)}
+  .nav__close:active{background:rgba(46,70,54,.15)}
+  .nav__cta{display:inline-flex;margin-top:1rem;font-size:1rem;
+    opacity:0;transform:translateY(18px);transition:opacity .5s var(--ease) .2s,transform .5s var(--ease) .2s}
+  .nav.is-open .nav__cta{opacity:1;transform:none}
+  body.menu-open .wa-float,body.menu-open .totop{opacity:0;visibility:hidden;pointer-events:none}
   .burger{display:flex}
   .header__cta{display:none}
   body.menu-open{overflow:hidden}
