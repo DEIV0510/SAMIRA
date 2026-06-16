@@ -81,6 +81,7 @@
 <!-- ===================== HERO ===================== -->
 <section class="hero" id="inicio">
   <div class="hero__bg" aria-hidden="true">
+    <span class="aurora"></span>
     <span class="blob blob--1"></span>
     <span class="blob blob--2"></span>
     <span class="leaf-float leaf-float--1" data-parallax="0.05"></span>
@@ -112,14 +113,21 @@
     </div>
 
     <div class="hero__stage reveal" data-d="2" aria-hidden="true">
-      <div class="stage__glow"></div>
-      <div class="stage__ring"></div>
-      <img class="hero__prod hero__prod--left" src="assets/products/magnesio.webp" alt="" />
-      <img class="hero__prod hero__prod--right" src="assets/products/resveratrol.webp" alt="" />
-      <img class="hero__prod hero__prod--main" src="assets/products/omega3.webp" alt="" />
-      <span class="capsule capsule--1"></span>
-      <span class="capsule capsule--2"></span>
-      <span class="capsule capsule--3"></span>
+      <span class="stage__rays"></span>
+      <canvas class="stage__particles" id="heroParticles"></canvas>
+      <div class="stage3d" id="stage3d">
+        <span class="stage__glow"></span>
+        <span class="stage__disc"></span>
+        <span class="podium"></span>
+        <img class="hero__prod hero__prod--left" src="assets/products/magnesio.webp" alt="Citrato de Magnesio" />
+        <img class="hero__prod hero__prod--right" src="assets/products/resveratrol.webp" alt="Resveratrol Plus" />
+        <img class="hero__prod hero__prod--main" src="assets/products/omega3.webp" alt="Omega 3 1300mg" />
+        <span class="cap3d cap3d--1"></span>
+        <span class="cap3d cap3d--2"></span>
+        <span class="cap3d cap3d--3"></span>
+        <span class="cap3d cap3d--4"></span>
+        <span class="cap3d cap3d--5"></span>
+      </div>
     </div>
   </div>
 

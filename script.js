@@ -415,3 +415,41 @@ if(!reduceMotion){
 
   render();
 })();
+
+/* ============================================================
+   12) 🧊 HERO 3D — parallax con el cursor + partículas bokeh
+   ============================================================ */
+(function hero3d(){
+  const stage3d = $("#stage3d");
+  if(stage3d && finePointer && !reduceMotion){
+    let tx = 0, ty = 0, cx = 0, cy = 0;
+    addEventListener("pointermove", e => { cx = e.clientX / innerWidth - 0.5; cy = e.clientY / innerHeight - 0.5; });
+    (function loop(){
+      tx += (cx - tx) * 0.08; ty += (cy - ty) * 0.08;
+      stage3d.style.transform = `rotateY(${tx * 16}deg) rotateX(${-ty * 12}deg)`;
+      requestAnimationFrame(loop);
+    })();
+  }
+
+  const c = $("#heroParticles");
+  if(!c || reduceMotion) return;
+  const ctx = c.getContext("2d");
+  let W = 0, H = 0, parts = [], dpr = Math.min(devicePixelRatio || 1, 2);
+  const COL = [[194,163,107],[143,207,174],[232,137,107],[231,157,174]];
+  function size(){ const r = c.getBoundingClientRect(); W = r.width; H = r.height; c.width = W * dpr; c.height = H * dpr; ctx.setTransform(dpr,0,0,dpr,0,0); }
+  function seed(){ const n = W < 520 ? 14 : 28; parts = Array.from({length:n}, () => ({ x:Math.random()*W, y:Math.random()*H, z:Math.random(), sp:Math.random()*0.35+0.08, hue:Math.floor(Math.random()*COL.length) })); }
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    parts.forEach(p => {
+      p.y -= p.sp * (0.5 + p.z); if(p.y < -12){ p.y = H + 12; p.x = Math.random()*W; }
+      const rad = (1.5 + p.z*4) * 3.5, a = 0.12 + p.z*0.4, col = COL[p.hue];
+      const g = ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,rad);
+      g.addColorStop(0, `rgba(${col[0]},${col[1]},${col[2]},${a})`);
+      g.addColorStop(1, `rgba(${col[0]},${col[1]},${col[2]},0)`);
+      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(p.x,p.y,rad,0,Math.PI*2); ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  size(); seed(); draw();
+  addEventListener("resize", () => { size(); seed(); });
+})();
