@@ -116,7 +116,7 @@ function bottleSVG(p){
 (function renderProducts(){
   const grid = $("#productGrid"); if(!grid) return;
   grid.innerHTML = PRODUCTS.map((p,i) => `
-    <article class="pcard reveal" data-d="${i%3}" style="--pc:${p.accent}33">
+    <article class="pcard reveal reveal--pop" data-d="${i%3}" style="--pc:${p.accent}33">
       ${p.tag ? `<span class="pcard__tag">${p.tag}</span>` : ""}
       <div class="pcard__visual"><span class="stage__glow"></span>${bottleSVG(p)}</div>
       <h3 class="pcard__name">${p.name}</h3>
@@ -158,10 +158,12 @@ const yr = $("#year"); if(yr) yr.textContent = new Date().getFullYear();
    5) HEADER · mobile menu · back-to-top
    ============================================================ */
 const header = $("#header"), nav = $("#nav"), burger = $("#burger"), toTop = $("#toTop");
+const progress = $("#scrollProgress");
 const onScroll = () => {
   const y = scrollY;
   header.classList.toggle("is-stuck", y > 30);
   toTop.classList.toggle("is-on", y > 700);
+  if (progress) { const h = document.documentElement.scrollHeight - innerHeight; progress.style.transform = `scaleX(${h > 0 ? y / h : 0})`; }
 };
 addEventListener("scroll", onScroll, {passive:true}); onScroll();
 
@@ -269,10 +271,39 @@ if(finePointer && !reduceMotion){
 }
 
 /* ============================================================
-   9) FAQ — single-open accordion
+   9) FAQ — single-open accordion (si existe)
    ============================================================ */
 $$("#faqList details").forEach(d => {
   d.addEventListener("toggle", () => {
     if(d.open) $$("#faqList details").forEach(o => { if(o!==d) o.open = false; });
   });
 });
+
+/* ============================================================
+   10) ✨ Chispas de dopamina al hacer clic en los CTA
+   ============================================================ */
+if(!reduceMotion){
+  const SPARK_COLORS = ["#C2A36B","#E8896B","#8FCFAE","#E79DAE","#d8bf94","#6E8B6E"];
+  function sparkBurst(x, y){
+    const n = 16;
+    for(let i=0;i<n;i++){
+      const s = document.createElement("span");
+      s.className = "spark";
+      s.style.left = x + "px"; s.style.top = y + "px";
+      s.style.background = SPARK_COLORS[i % SPARK_COLORS.length];
+      const ang = (Math.PI*2/n)*i + Math.random()*0.6;
+      const dist = 55 + Math.random()*80;
+      const dx = Math.cos(ang)*dist, dy = Math.sin(ang)*dist - 10;
+      document.body.appendChild(s);
+      s.animate([
+        { transform:"translate(-50%,-50%) scale(1) rotate(0deg)", opacity:1 },
+        { transform:`translate(calc(-50% + ${dx}px),calc(-50% + ${dy}px)) scale(0) rotate(240deg)`, opacity:0 }
+      ], { duration: 700 + Math.random()*350, easing:"cubic-bezier(.22,1,.36,1)" });
+      setTimeout(() => s.remove(), 1100);
+    }
+  }
+  addEventListener("click", (e) => {
+    const t = e.target.closest(".pcard__buy, .btn--solid, .wa-float, [data-wa]");
+    if(t) sparkBurst(e.clientX, e.clientY);
+  }, true);
+}

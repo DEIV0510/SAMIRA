@@ -13,6 +13,10 @@
   --sage-mist:#cdd9c9;
   --gold:#C2A36B;
   --gold-soft:#d8bf94;
+  --coral:#E8896B;
+  --coral-soft:#F2B49A;
+  --rose:#E79DAE;
+  --mint:#8FCFAE;
   --cream:#F4F2EA;
   --cream-2:#EDE9DD;
   --cream-3:#E5E0D0;
@@ -499,4 +503,97 @@ em{font-style:italic;color:var(--sage)}
 @media (max-width:560px){
   .footer--lean .footer__inner{flex-direction:column;text-align:center}
   .footer__links{justify-content:center}
+}
+
+/* ============================================================
+   ✨ DOPAMINA — color, movimiento y micro-animaciones
+   ============================================================ */
+@keyframes meshFloat{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(7%,-6%) scale(1.1)}66%{transform:translate(-6%,5%) scale(.92)}}
+@keyframes gradShift{to{background-position:200% center}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes pulseGlow{0%,100%{opacity:.45;transform:translate(-50%,-50%) scale(.9)}50%{opacity:.85;transform:translate(-50%,-50%) scale(1.14)}}
+@keyframes twinkle{0%,100%{opacity:0;transform:scale(.3) rotate(0)}50%{opacity:1;transform:scale(1) rotate(90deg)}}
+@keyframes shineSweep{0%{transform:translateX(-130%) skewX(-18deg)}60%,100%{transform:translateX(360%) skewX(-18deg)}}
+@keyframes wiggle{0%,100%{transform:rotate(0)}25%{transform:rotate(-9deg)}75%{transform:rotate(9deg)}}
+@keyframes popIn{0%{opacity:0;transform:translateY(30px) scale(.9)}62%{opacity:1;transform:translateY(-5px) scale(1.015)}100%{opacity:1;transform:none}}
+@keyframes ctaShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+@keyframes badgePop{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+
+/* barra de progreso de scroll */
+.scroll-progress{position:fixed;top:0;left:0;height:3px;width:100%;transform:scaleX(0);transform-origin:0 50%;z-index:300;
+  background:linear-gradient(90deg,var(--sage),var(--gold),var(--coral),var(--rose));box-shadow:0 1px 8px rgba(232,137,107,.4)}
+
+/* HERO — fondo vivo y colorido */
+.blob{animation:meshFloat 18s var(--ease-soft) infinite}
+.blob--1{background:radial-gradient(circle,rgba(143,207,174,.6),transparent 70%)}
+.blob--2{background:radial-gradient(circle,rgba(232,137,107,.42),transparent 70%);animation-duration:23s;animation-direction:reverse}
+.hero__bg::after{content:"";position:absolute;width:44vw;height:44vw;max-width:580px;max-height:580px;top:34%;left:28%;border-radius:50%;
+  background:radial-gradient(circle,rgba(231,157,174,.32),transparent 70%);filter:blur(60px);animation:meshFloat 27s var(--ease-soft) infinite}
+
+/* titular con degradado animado */
+.hero__title em{background:linear-gradient(100deg,var(--sage) 0%,var(--gold) 28%,var(--coral) 50%,var(--gold) 72%,var(--sage) 100%);
+  background-size:200% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
+  animation:gradShift 5s linear infinite}
+.swap__word.is-on{background:linear-gradient(90deg,var(--coral),var(--gold));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;font-weight:600}
+.eyebrow__dot{animation:badgePop 1.8s var(--ease-soft) infinite}
+.hero__badges li{transition:transform .3s var(--ease),color .3s}
+.hero__badges li:hover{transform:translateY(-3px) scale(1.05);color:var(--coral)}
+
+/* showcase con vida */
+.stage__glow{animation:pulseGlow 4.5s var(--ease-soft) infinite}
+.stage__ring{border-color:rgba(194,163,107,.55)}
+.capsule--1{box-shadow:0 10px 22px -6px rgba(232,137,107,.7);background:linear-gradient(135deg,var(--coral),var(--gold-soft))}
+
+/* botones — degradado + barrido de brillo */
+.btn--solid{background:linear-gradient(120deg,var(--forest),#3c5d47 55%,var(--forest));position:relative;overflow:hidden;background-size:160% auto}
+.btn--solid::after{content:"";position:absolute;top:0;left:0;width:34%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.45),transparent);transform:translateX(-140%) skewX(-18deg);pointer-events:none}
+.btn--solid:hover::after{animation:shineSweep .9s ease}
+.btn--solid:hover{transform:translateY(-3px) scale(1.02)}
+.cta .btn--solid{background:linear-gradient(120deg,var(--cream),#fffdf7)}
+
+/* MARQUEE vibrante */
+.marquee{background:linear-gradient(90deg,var(--forest),var(--forest-deep) 50%,var(--forest))}
+.marquee__track i{color:var(--coral-soft);animation:spin 6s linear infinite;display:inline-block}
+
+/* PRODUCTOS — pop, glow, brillo y frascos flotando */
+.reveal--pop{opacity:0}
+.reveal--pop.is-in{animation:popIn .8s var(--ease) forwards}
+.pcard{will-change:transform}
+.pcard::after{content:"";position:absolute;top:0;left:0;width:45%;height:100%;z-index:3;pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent);transform:translateX(-150%) skewX(-18deg)}
+.pcard:hover::after{animation:shineSweep 1s ease}
+.pcard:hover{transform:translateY(-12px) scale(1.015);box-shadow:0 34px 70px -26px rgba(46,70,54,.4),0 0 0 1.5px rgba(232,137,107,.45)}
+.pcard__bottle{animation:bob 4s var(--ease-soft) infinite}
+.pcard:nth-child(2) .pcard__bottle{animation-delay:.5s}
+.pcard:nth-child(3) .pcard__bottle{animation-delay:1s}
+.pcard:nth-child(4) .pcard__bottle{animation-delay:.7s}
+.pcard:nth-child(5) .pcard__bottle{animation-delay:.3s}
+.pcard__tag{background:linear-gradient(120deg,var(--coral),var(--gold));animation:badgePop 2s var(--ease-soft) infinite}
+.pcard__buy{background:linear-gradient(120deg,var(--forest),var(--sage));background-size:160% auto;box-shadow:0 10px 22px -10px rgba(46,70,54,.6)}
+.pcard__buy:hover{background:linear-gradient(120deg,var(--coral),var(--gold));transform:translateY(-2px) scale(1.05);box-shadow:0 14px 26px -10px rgba(232,137,107,.7)}
+.pcard__price{background:linear-gradient(90deg,var(--forest),var(--gold));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+
+/* TRUST — íconos vivos */
+.trust__ico{background:linear-gradient(135deg,rgba(143,207,174,.5),rgba(232,137,107,.4));animation:bob 4.5s var(--ease-soft) infinite}
+.trust__item:nth-child(2) .trust__ico{animation-delay:.6s}
+.trust__item:nth-child(3) .trust__ico{animation-delay:1.2s}
+.trust__item:hover .trust__ico{animation-play-state:paused;transform:scale(1.1) rotate(-6deg)}
+
+/* CTA — degradado animado + brillo */
+.cta{background:linear-gradient(135deg,var(--forest),var(--forest-deep) 45%,#2c4d39 70%,var(--forest));background-size:220% 220%;animation:ctaShift 13s ease infinite}
+.cta__glow{animation:pulseGlow 5s var(--ease-soft) infinite;background:radial-gradient(circle,rgba(232,137,107,.45),transparent 65%)}
+
+/* WhatsApp flotante más vivo */
+.wa-float{animation:bob 2.6s var(--ease-soft) infinite}
+.wa-float:hover{animation-play-state:paused}
+.wa-float svg{animation:wiggle 3.5s var(--ease-soft) infinite}
+
+/* chispas (creadas por JS al hacer clic) */
+.spark{position:fixed;z-index:600;width:12px;height:12px;pointer-events:none;border-radius:1px;
+  clip-path:polygon(50% 0,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0 50%,39% 39%)}
+
+@media (max-width:560px){
+  .hero__bg::after{display:none}
+  .pcard:hover{transform:translateY(-6px)}
 }
