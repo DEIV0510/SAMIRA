@@ -124,11 +124,10 @@ function bottleSVG(p){
       <div class="pcard__chips">${p.chips.map(c=>`<span>${c}</span>`).join("")}</div>
       <div class="pcard__foot">
         <span class="pcard__price">$${p.price}<small>COP</small></span>
-        <a class="pcard__buy" target="_blank" rel="noopener"
-           href="${waLink(`Hola SAMIRA 🌿, quiero pedir: ${p.name} ($${p.price} COP).`)}">
-          Pedir
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.07L2 22l5.07-1.33A10 10 0 1 0 12 2Zm5.5 14.2c-.23.65-1.35 1.24-1.86 1.28-.5.05-.96.23-3.23-.67-2.72-1.07-4.45-3.86-4.58-4.04-.13-.18-1.1-1.46-1.1-2.79 0-1.33.7-1.98.94-2.25.24-.27.53-.34.7-.34h.5c.16 0 .38-.06.59.45.23.56.78 1.94.85 2.08.07.14.11.3.02.48-.09.18-.13.3-.27.46l-.4.47c-.13.13-.27.28-.12.54.16.27.71 1.17 1.53 1.9 1.05.93 1.93 1.22 2.2 1.36.27.13.43.11.59-.07.16-.18.68-.79.86-1.06.18-.27.36-.22.6-.13.25.09 1.58.74 1.85.88.27.13.45.2.51.31.07.11.07.64-.16 1.29Z"/></svg>
-        </a>
+        <button class="pcard__buy" data-add="${i}" aria-label="Agregar ${p.name} a mi pedido">
+          Agregar
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M12 5v14M5 12h14"/></svg>
+        </button>
       </div>
     </article>`).join("");
 })();
@@ -307,3 +306,111 @@ if(!reduceMotion){
     if(t) sparkBurst(e.clientX, e.clientY);
   }, true);
 }
+
+/* ============================================================
+   11) 🛒 CARRITO + pedido automático por WhatsApp
+   ============================================================ */
+(function cartModule(){
+  const KEY = "samira_cart";
+  const btn = $("#cartBtn"), count = $("#cartCount"), root = $("#cart"), overlay = $("#cartOverlay"),
+        closeBtn = $("#cartClose"), itemsEl = $("#cartItems"), emptyEl = $("#cartEmpty"),
+        footEl = $("#cartFoot"), totalEl = $("#cartTotal"), checkout = $("#cartCheckout");
+  if(!btn || !root) return;
+
+  const priceNum = s => parseInt(String(s).replace(/\D/g, ""), 10) || 0;
+  const fmt = n => "$" + n.toLocaleString("es-CO");
+
+  let cart = [];
+  try { cart = JSON.parse(localStorage.getItem(KEY)) || []; } catch(e) { cart = []; }
+  cart = cart.filter(it => PRODUCTS[it.i]).map(it => ({ i: it.i, qty: Math.max(1, it.qty | 0) }));
+
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(cart)); } catch(e) {} };
+  const totalQty = () => cart.reduce((s, it) => s + it.qty, 0);
+  const totalCOP = () => cart.reduce((s, it) => s + priceNum(PRODUCTS[it.i].price) * it.qty, 0);
+
+  function buildMessage(){
+    const lines = cart.map(it => { const p = PRODUCTS[it.i]; return `• ${it.qty}× ${p.name} — ${fmt(priceNum(p.price) * it.qty)}`; }).join("\n");
+    return `¡Hola SAMIRA 🌿! Quiero hacer este pedido:\n\n${lines}\n\n*Total: ${fmt(totalCOP())} COP*\n\nMi nombre: \nCiudad y dirección de envío: \n\n¿Me confirmas disponibilidad? 🙌`;
+  }
+
+  function updateBadge(){
+    const q = totalQty();
+    count.textContent = q;
+    count.classList.toggle("is-on", q > 0);
+    btn.classList.remove("bump"); void btn.offsetWidth; if(q > 0) btn.classList.add("bump");
+  }
+
+  function render(){
+    if(!cart.length){
+      itemsEl.innerHTML = ""; emptyEl.hidden = false; footEl.hidden = true;
+    } else {
+      emptyEl.hidden = true; footEl.hidden = false;
+      itemsEl.innerHTML = cart.map(it => {
+        const p = PRODUCTS[it.i];
+        return `<div class="cart__row" data-i="${it.i}">
+          <div class="cart__row-info">
+            <span class="cart__row-name">${p.name}</span>
+            <span class="cart__row-price">${fmt(priceNum(p.price))} c/u</span>
+          </div>
+          <div class="cart__qty">
+            <button class="cart__qbtn" data-act="dec" aria-label="Quitar uno">−</button>
+            <span class="cart__qn">${it.qty}</span>
+            <button class="cart__qbtn" data-act="inc" aria-label="Agregar uno">+</button>
+          </div>
+          <span class="cart__row-total">${fmt(priceNum(p.price) * it.qty)}</span>
+          <button class="cart__row-del" data-act="del" aria-label="Eliminar">×</button>
+        </div>`;
+      }).join("");
+    }
+    totalEl.textContent = fmt(totalCOP());
+    checkout.href = waLink(buildMessage());
+    updateBadge();
+    save();
+  }
+
+  function add(i){
+    const ex = cart.find(it => it.i === i);
+    if(ex) ex.qty++; else cart.push({ i, qty: 1 });
+    render();
+  }
+
+  // botones "Agregar" de las tarjetas (delegado)
+  document.addEventListener("click", e => {
+    const addBtn = e.target.closest("[data-add]");
+    if(!addBtn) return;
+    const i = parseInt(addBtn.dataset.add, 10);
+    if(!PRODUCTS[i]) return;
+    add(i); toast(`${PRODUCTS[i].name} agregado`);
+  });
+
+  // controles dentro del carrito (delegado)
+  itemsEl.addEventListener("click", e => {
+    const act = e.target.closest("[data-act]")?.dataset.act; if(!act) return;
+    const row = e.target.closest(".cart__row"); if(!row) return;
+    const i = parseInt(row.dataset.i, 10);
+    const it = cart.find(c => c.i === i); if(!it) return;
+    if(act === "inc") it.qty++;
+    else if(act === "dec") { it.qty--; if(it.qty <= 0) cart = cart.filter(c => c.i !== i); }
+    else if(act === "del") cart = cart.filter(c => c.i !== i);
+    render();
+  });
+
+  const open = () => { root.classList.add("is-open"); root.setAttribute("aria-hidden", "false"); document.body.classList.add("cart-open"); };
+  const close = () => { root.classList.remove("is-open"); root.setAttribute("aria-hidden", "true"); document.body.classList.remove("cart-open"); };
+  btn.addEventListener("click", open);
+  closeBtn.addEventListener("click", close);
+  overlay.addEventListener("click", close);
+  addEventListener("keydown", e => { if(e.key === "Escape") close(); });
+  checkout.addEventListener("click", () => setTimeout(close, 500));
+
+  // mini-toast de confirmación
+  let toastEl;
+  function toast(msg){
+    if(!toastEl){ toastEl = document.createElement("div"); toastEl.className = "cart-toast"; document.body.appendChild(toastEl); }
+    toastEl.textContent = "✓ " + msg;
+    toastEl.classList.remove("is-on"); void toastEl.offsetWidth; toastEl.classList.add("is-on");
+    clearTimeout(toastEl._t); toastEl._t = setTimeout(() => toastEl.classList.remove("is-on"), 2200);
+  }
+
+  render();
+})();
