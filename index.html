@@ -92,8 +92,8 @@
       <p class="eyebrow reveal" data-d="0"><span class="eyebrow__dot"></span> Suplementos premium · Envíos a toda Colombia</p>
       <h1 class="hero__title reveal" data-d="1">Tu bienestar,<br /><em>desde adentro.</em></h1>
       <p class="hero__sub reveal" data-d="2">
-        Colágeno, Omega 3 y más, con la pureza de lo natural.
-        Cuida <span class="swap" id="heroSwap"><span class="swap__word is-on">tu piel</span></span> y pide en un clic por WhatsApp.
+        Magnesio, Omega 3, Resveratrol y más, con la calidad que tu cuerpo merece.
+        Cuida <span class="swap" id="heroSwap"><span class="swap__word is-on">tu energía</span></span> y pídelo en un clic por WhatsApp.
       </p>
       <div class="hero__cta reveal" data-d="3">
         <a class="btn btn--solid magnetic" href="#productos">Ver productos</a>
@@ -112,47 +112,9 @@
     <div class="hero__stage reveal" data-d="2" aria-hidden="true">
       <div class="stage__glow"></div>
       <div class="stage__ring"></div>
-      <!-- Collagen jar -->
-      <div class="product3d product3d--jar tilt" data-tilt>
-        <svg viewBox="0 0 200 260" class="bottle">
-          <defs>
-            <linearGradient id="jarBody" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="#34503D"/><stop offset="1" stop-color="#22382B"/>
-            </linearGradient>
-            <linearGradient id="jarShine" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0" stop-color="#ffffff" stop-opacity=".35"/><stop offset=".25" stop-color="#ffffff" stop-opacity="0"/>
-            </linearGradient>
-          </defs>
-          <rect x="64" y="14" width="72" height="26" rx="7" fill="#1d2f24"/>
-          <rect x="44" y="44" width="112" height="180" rx="20" fill="url(#jarBody)"/>
-          <rect x="44" y="44" width="112" height="180" rx="20" fill="url(#jarShine)"/>
-          <rect x="56" y="92" width="88" height="96" rx="10" fill="#F4F2EA"/>
-          <text x="100" y="120" text-anchor="middle" class="lbl-brand">SAMIRA</text>
-          <line x1="72" y1="132" x2="128" y2="132" stroke="#C2A36B" stroke-width="2"/>
-          <text x="100" y="152" text-anchor="middle" class="lbl-prod">COLÁGENO</text>
-          <text x="100" y="168" text-anchor="middle" class="lbl-sub">HIDROLIZADO · VIT C</text>
-        </svg>
-      </div>
-      <!-- Omega bottle -->
-      <div class="product3d product3d--bottle tilt" data-tilt>
-        <svg viewBox="0 0 160 280" class="bottle">
-          <defs>
-            <linearGradient id="bdy" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="#6E8B6E"/><stop offset="1" stop-color="#4d6b4f"/>
-            </linearGradient>
-          </defs>
-          <rect x="58" y="10" width="44" height="22" rx="5" fill="#C2A36B"/>
-          <rect x="64" y="30" width="32" height="16" fill="#b3925a"/>
-          <rect x="40" y="46" width="80" height="210" rx="22" fill="url(#bdy)"/>
-          <rect x="52" y="40" width="56" height="14" rx="7" fill="#ffffff" opacity=".18"/>
-          <rect x="50" y="96" width="60" height="120" rx="10" fill="#F4F2EA"/>
-          <text x="80" y="124" text-anchor="middle" class="lbl-brand sm">SAMIRA</text>
-          <line x1="62" y1="134" x2="98" y2="134" stroke="#C2A36B" stroke-width="1.6"/>
-          <text x="80" y="156" text-anchor="middle" class="lbl-prod sm">OMEGA 3</text>
-          <text x="80" y="172" text-anchor="middle" class="lbl-sub sm">EPA · DHA</text>
-          <circle cx="80" cy="198" r="9" fill="#C2A36B" opacity=".85"/>
-        </svg>
-      </div>
+      <img class="hero__prod hero__prod--left" src="assets/products/magnesio.webp" alt="" />
+      <img class="hero__prod hero__prod--right" src="assets/products/resveratrol.webp" alt="" />
+      <img class="hero__prod hero__prod--main" src="assets/products/omega3.webp" alt="" />
       <span class="capsule capsule--1"></span>
       <span class="capsule capsule--2"></span>
       <span class="capsule capsule--3"></span>
@@ -172,12 +134,23 @@
   </div>
 </div>
 
+<!-- ===================== PROMESA ===================== -->
+<section class="promise" id="promesa">
+  <span class="promise__glow" aria-hidden="true"></span>
+  <div class="promise__inner reveal">
+    <p class="kicker">Tu salud merece lo mejor</p>
+    <h2 class="promise__title">Más <em>energía</em> y bienestar, en cada cápsula</h2>
+    <p class="promise__lead">Suplementos de alta calidad diseñados para darte más energía, fortalecer tu organismo y ayudarte a sentirte mejor. <strong>Miles de personas</strong> ya complementan su bienestar con SAMIRA. ¡Empieza hoy a cuidar de ti! ✨</p>
+    <a class="btn btn--solid btn--lg magnetic" href="#productos">Ver los productos</a>
+  </div>
+</section>
+
 <!-- ===================== PRODUCTOS (foco principal) ===================== -->
 <section class="section products" id="productos">
   <div class="section__head reveal">
     <p class="kicker">Nuestros productos</p>
     <h2 class="section__title">Elige tu <em>bienestar</em></h2>
-    <p class="section__lead">Cinco fórmulas premium para tu piel, tu energía y tu equilibrio. Pide la tuya por WhatsApp.</p>
+    <p class="section__lead">Cinco fórmulas de alta calidad para tu energía, tu corazón y tus huesos. Agrégalas a tu pedido y recíbelas en toda Colombia.</p>
   </div>
   <div class="products__grid" id="productGrid"></div>
   <p class="products__note reveal">¿No sabes cuál elegir? <a data-wa="Hola SAMIRA 🌿, ¿me ayudas a elegir el producto ideal para mí?" href="#contacto">Escríbenos</a> y te asesoramos sin compromiso.</p>

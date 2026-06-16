@@ -11,23 +11,23 @@ const CONFIG = {
   instagram: "https://www.instagram.com/samira.bienestar/",
 };
 
-// Productos — edita nombres, descripciones y PRECIOS aquí
+// Productos — edita nombres, textos, imágenes y PRECIOS aquí
 const PRODUCTS = [
-  { type:"jar", name:"Colágeno Hidrolizado", short:"COLÁGENO", sub:"HIDROLIZADO · VIT C",
-    desc:"Piel firme, articulaciones sanas y cabello fuerte, con vitamina C para máxima absorción.",
-    chips:["Piel","Antiedad","Vit C"], price:"89.900", tag:"Más vendido", accent:"#C2A36B" },
-  { type:"bottle", name:"Omega 3 Ultra", short:"OMEGA 3", sub:"EPA · DHA",
-    desc:"Aceite de pescado ultra puro para tu corazón, tu cerebro y tu equilibrio hormonal.",
-    chips:["Corazón","Cerebro","Hormonal"], price:"79.900", accent:"#6E8B6E" },
-  { type:"jar", name:"Biotina + Colágeno", short:"BIOTINA", sub:"+ COLÁGENO",
-    desc:"El dúo perfecto para un cabello abundante, piel luminosa y uñas más fuertes.",
-    chips:["Cabello","Uñas","Piel"], price:"69.900", accent:"#C2A36B" },
-  { type:"bottle", name:"Magnesio + Zinc", short:"MAGNESIO", sub:"+ ZINC",
-    desc:"Relájate, duerme mejor y recupera tu energía. Tu mejor aliado para el descanso.",
-    chips:["Sueño","Calma","Energía"], price:"59.900", accent:"#6E8B6E" },
-  { type:"jar", name:"Multivitamínico Mujer", short:"MULTIVIT", sub:"MUJER",
-    desc:"Vitaminas y minerales esenciales, pensados para el cuerpo y el ritmo de la mujer.",
-    chips:["Vitalidad","Inmunidad"], price:"74.900", tag:"Esencial", accent:"#34503D" },
+  { img:"omega3.webp", name:"Omega 3 1300 mg", tagline:"Cuida tu corazón, mente y cuerpo en una sola cápsula",
+    benefits:["Apoya la salud cardiovascular","Favorece la memoria y la concentración","Bienestar de articulaciones y visión","Enriquecido con vitaminas A, D y E"],
+    chips:["Corazón","Memoria","A·D·E"], price:"79.900", tag:"Más vendido", accent:"#C2A36B" },
+  { img:"magnesio.webp", name:"Citrato de Magnesio", tagline:"Recupera tu energía y dile adiós al cansancio",
+    benefits:["Reduce el cansancio físico y mental","Favorece la relajación y el descanso","Apoya el funcionamiento de músculos y nervios","Ideal para rutinas exigentes"],
+    chips:["Energía","Descanso","Músculos"], price:"69.900", accent:"#8FCFAE" },
+  { img:"resveratrol.webp", name:"Resveratrol Plus 1600 mg", tagline:"El antioxidante que te ayuda a mantenerte joven por más tiempo",
+    benefits:["Combate los efectos del estrés oxidativo","Protege las células del envejecimiento","Favorece la salud cardiovascular","Apoya tu bienestar general"],
+    chips:["Antioxidante","Antiedad","Uva roja"], price:"89.900", tag:"Antiedad", accent:"#E79DAE" },
+  { img:"calcio.webp", name:"Calcio + Vitamina D3", tagline:"Huesos fuertes para seguir disfrutando la vida",
+    benefits:["Ayuda a fortalecer huesos y dientes","Mejor absorción gracias a la Vitamina D3","Contribuye al buen funcionamiento muscular","Ideal para adultos y personas mayores"],
+    chips:["Huesos","Vit D3","Movilidad"], price:"69.900", accent:"#E8896B" },
+  { img:"magnesio-potasio.webp", name:"Magnesio y Potasio 5 en 1", tagline:"Menos calambres, más energía y mejor rendimiento",
+    benefits:["Ayuda a disminuir los calambres musculares","Favorece la recuperación tras la actividad física","Apoya la hidratación y el equilibrio mineral","Ideal para personas activas y deportistas"],
+    chips:["Calambres","Recuperación","Deporte"], price:"74.900", tag:"Deportistas", accent:"#6E8B6E" },
 ];
 
 const TESTIMONIALS = [
@@ -37,7 +37,7 @@ const TESTIMONIALS = [
   { name:"Andrea L.", role:"Barranquilla", stars:5, text:"Mis uñas y mi cabello están más fuertes que nunca. SAMIRA se volvió parte de mí." },
 ];
 
-const HERO_WORDS = ["tu piel", "tu energía", "tu cabello", "tu descanso", "tu equilibrio"];
+const HERO_WORDS = ["tu energía", "tu descanso", "tu corazón", "tus huesos", "tu vitalidad"];
 
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const finePointer  = window.matchMedia("(hover:hover) and (pointer:fine)").matches;
@@ -116,11 +116,12 @@ function bottleSVG(p){
 (function renderProducts(){
   const grid = $("#productGrid"); if(!grid) return;
   grid.innerHTML = PRODUCTS.map((p,i) => `
-    <article class="pcard reveal reveal--pop" data-d="${i%3}" style="--pc:${p.accent}33">
+    <article class="pcard reveal reveal--pop" data-d="${i%3}" style="--pc:${p.accent}">
       ${p.tag ? `<span class="pcard__tag">${p.tag}</span>` : ""}
-      <div class="pcard__visual"><span class="stage__glow"></span>${bottleSVG(p)}</div>
+      <div class="pcard__visual"><span class="pcard__halo"></span><img class="pcard__img" src="assets/products/${p.img}" alt="${p.name}" loading="lazy" width="250" height="460" /></div>
       <h3 class="pcard__name">${p.name}</h3>
-      <p class="pcard__desc">${p.desc}</p>
+      <p class="pcard__tagline">${p.tagline}</p>
+      <ul class="pcard__benefits">${p.benefits.map(b=>`<li>${b}</li>`).join("")}</ul>
       <div class="pcard__chips">${p.chips.map(c=>`<span>${c}</span>`).join("")}</div>
       <div class="pcard__foot">
         <span class="pcard__price">$${p.price}<small>COP</small></span>

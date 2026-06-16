@@ -653,3 +653,50 @@ body.cart-open{overflow:hidden}
   box-shadow:0 16px 40px -12px rgba(22,36,27,.6);opacity:0;pointer-events:none;
   transition:opacity .35s ease,transform .35s var(--ease)}
 .cart-toast.is-on{opacity:1;transform:translate(-50%,0)}
+
+/* ============================================================
+   PRODUCTOS REALES (imágenes) + PROMESA
+   ============================================================ */
+.pcard__visual{position:relative;height:206px;display:grid;place-items:center;margin-bottom:14px}
+.pcard__halo{position:absolute;width:176px;height:176px;border-radius:50%;
+  background:radial-gradient(circle,var(--pc,#9DB89A),transparent 62%);opacity:.26;filter:blur(10px);
+  transition:opacity .5s,transform .5s var(--ease)}
+.pcard:hover .pcard__halo{opacity:.45;transform:scale(1.1)}
+.pcard__img{position:relative;z-index:2;height:196px;width:auto;object-fit:contain;
+  filter:drop-shadow(0 20px 22px rgba(31,51,38,.30));animation:bob 4.5s var(--ease-soft) infinite}
+.pcard:nth-child(2) .pcard__img{animation-delay:.5s}
+.pcard:nth-child(3) .pcard__img{animation-delay:1s}
+.pcard:nth-child(4) .pcard__img{animation-delay:.7s}
+.pcard:nth-child(5) .pcard__img{animation-delay:.3s}
+.pcard:hover .pcard__img{filter:drop-shadow(0 28px 26px rgba(31,51,38,.42))}
+.pcard:hover::before{opacity:.32}
+.pcard__name{margin-bottom:.15em}
+.pcard__tagline{font-family:var(--font-serif);font-style:italic;font-size:1.08rem;color:var(--sage);line-height:1.25;margin-bottom:1em;min-height:2.7em}
+.pcard__benefits{display:flex;flex-direction:column;gap:.5em;margin-bottom:1.2em}
+.pcard__benefits li{position:relative;padding-left:1.8em;font-size:.86rem;color:var(--ink);line-height:1.35}
+.pcard__benefits li::before{content:"";position:absolute;left:0;top:.1em;width:1.15em;height:1.15em;border-radius:50%;
+  background:linear-gradient(135deg,var(--mint),var(--sage));box-shadow:0 2px 6px -2px rgba(110,139,110,.6)}
+.pcard__benefits li::after{content:"";position:absolute;left:.36em;top:.4em;width:.34em;height:.18em;
+  border-left:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(-45deg)}
+
+/* hero con productos reales flotando */
+.hero__prod{position:absolute;height:auto;filter:drop-shadow(0 30px 30px rgba(31,51,38,.34));}
+.hero__prod--main{width:min(44%,210px);z-index:4;left:50%;top:50%;transform:translate(-50%,-50%);animation:bobC 4s var(--ease-soft) infinite}
+.hero__prod--left{width:min(30%,140px);z-index:3;left:4%;top:62%;transform:translateY(-50%);animation:bobY 5s var(--ease-soft) infinite reverse}
+.hero__prod--right{width:min(28%,128px);z-index:3;right:4%;top:36%;transform:translateY(-50%);animation:bobY 5.5s var(--ease-soft) .5s infinite}
+@keyframes bobC{0%,100%{transform:translate(-50%,-50%)}50%{transform:translate(-50%,calc(-50% - 12px))}}
+@keyframes bobY{0%,100%{transform:translateY(-50%)}50%{transform:translateY(calc(-50% - 12px))}}
+
+/* PROMESA */
+.promise{position:relative;max-width:780px;margin-inline:auto;padding:clamp(44px,7vw,84px) clamp(20px,5vw,40px);text-align:center;overflow:hidden}
+.promise__glow{position:absolute;width:62%;aspect-ratio:1;border-radius:50%;top:-18%;left:50%;transform:translateX(-50%);
+  background:radial-gradient(circle,rgba(232,137,107,.3),transparent 65%);filter:blur(42px);z-index:-1;animation:pulseGlow 6s var(--ease-soft) infinite}
+.promise__title{font-size:clamp(2rem,5.4vw,3.4rem);margin-bottom:.45em}
+.promise__lead{color:var(--muted);font-size:1.12rem;max-width:56ch;margin:0 auto 2rem}
+.promise__lead strong{color:var(--forest);font-weight:500}
+
+@media (max-width:560px){
+  .hero__prod--main{width:48%}
+  .hero__prod--left{width:34%;left:0;top:66%}
+  .hero__prod--right{width:32%;right:0;top:30%}
+}
