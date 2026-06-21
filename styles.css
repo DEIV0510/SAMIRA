@@ -776,3 +776,37 @@ body.cart-open{overflow:hidden}
   .stage__disc{width:94%}
   .cap3d--4,.cap3d--5{display:none}
 }
+
+/* ============================================================
+   💸 VENDEDORA — barra de oferta, descuentos, reseñas, garantía
+   ============================================================ */
+/* barra de oferta superior (marquee) */
+.announce{position:fixed;top:0;left:0;right:0;height:38px;z-index:160;overflow:hidden;display:flex;align-items:center;
+  background:linear-gradient(90deg,var(--forest),#3a5a44 50%,var(--forest));color:var(--cream);
+  font-size:.82rem;letter-spacing:.01em;white-space:nowrap;box-shadow:0 1px 0 rgba(0,0,0,.15)}
+.announce__track{display:inline-flex;align-items:center;animation:announceScroll 26s linear infinite}
+.announce__track span{padding:0 1.1rem;display:inline-flex;align-items:center}
+.announce__track i{color:var(--gold-soft);font-style:normal;font-size:.55rem}
+@keyframes announceScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.header{top:38px}
+
+/* descuento en tarjetas de producto */
+.pcard__off{position:absolute;top:18px;left:18px;z-index:3;background:linear-gradient(120deg,#d64545,var(--coral));
+  color:#fff;font-size:.74rem;font-weight:600;letter-spacing:.02em;padding:.38em .75em;border-radius:100px;
+  box-shadow:0 6px 14px -4px rgba(214,69,69,.55);animation:badgePop 2s var(--ease-soft) infinite}
+.pcard__prices{display:flex;flex-direction:column;line-height:1.05}
+.pcard__old{font-size:.85rem;color:var(--muted);text-decoration:line-through;text-decoration-color:var(--coral)}
+
+/* reseñas */
+.reviews__rating{margin-top:1em;font-size:1.02rem;color:var(--muted)}
+.reviews__stars{color:var(--gold);letter-spacing:3px;font-size:1.15rem;vertical-align:middle}
+.reviews__rating strong{color:var(--forest);font-weight:600}
+
+/* garantía en CTA */
+.cta__badges{display:flex;flex-wrap:wrap;justify-content:center;gap:1rem 1.6rem;margin-top:1.9rem}
+.cta__badges span{font-size:.88rem;color:rgba(244,242,234,.92);display:inline-flex;align-items:center;gap:.4em}
+
+@media (max-width:560px){
+  .announce{font-size:.74rem;height:34px}
+  .header{top:34px}
+}

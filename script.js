@@ -15,26 +15,26 @@ const CONFIG = {
 const PRODUCTS = [
   { img:"omega3.webp", name:"Omega 3 1300 mg", tagline:"Cuida tu corazón, mente y cuerpo en una sola cápsula",
     benefits:["Apoya la salud cardiovascular","Favorece la memoria y la concentración","Bienestar de articulaciones y visión","Enriquecido con vitaminas A, D y E"],
-    chips:["Corazón","Memoria","A·D·E"], price:"79.900", tag:"Más vendido", accent:"#C2A36B" },
+    chips:["Corazón","Memoria","A·D·E"], price:"79.900", oldPrice:"109.900", tag:"Más vendido", accent:"#C2A36B" },
   { img:"magnesio.webp", name:"Citrato de Magnesio", tagline:"Recupera tu energía y dile adiós al cansancio",
     benefits:["Reduce el cansancio físico y mental","Favorece la relajación y el descanso","Apoya el funcionamiento de músculos y nervios","Ideal para rutinas exigentes"],
-    chips:["Energía","Descanso","Músculos"], price:"69.900", accent:"#8FCFAE" },
+    chips:["Energía","Descanso","Músculos"], price:"69.900", oldPrice:"94.900", accent:"#8FCFAE" },
   { img:"resveratrol.webp", name:"Resveratrol Plus 1600 mg", tagline:"El antioxidante que te ayuda a mantenerte joven por más tiempo",
     benefits:["Combate los efectos del estrés oxidativo","Protege las células del envejecimiento","Favorece la salud cardiovascular","Apoya tu bienestar general"],
-    chips:["Antioxidante","Antiedad","Uva roja"], price:"89.900", tag:"Antiedad", accent:"#E79DAE" },
+    chips:["Antioxidante","Antiedad","Uva roja"], price:"89.900", oldPrice:"119.900", tag:"Antiedad", accent:"#E79DAE" },
   { img:"calcio.webp", name:"Calcio + Vitamina D3", tagline:"Huesos fuertes para seguir disfrutando la vida",
     benefits:["Ayuda a fortalecer huesos y dientes","Mejor absorción gracias a la Vitamina D3","Contribuye al buen funcionamiento muscular","Ideal para adultos y personas mayores"],
-    chips:["Huesos","Vit D3","Movilidad"], price:"69.900", accent:"#E8896B" },
+    chips:["Huesos","Vit D3","Movilidad"], price:"69.900", oldPrice:"89.900", accent:"#E8896B" },
   { img:"magnesio-potasio.webp", name:"Magnesio y Potasio 5 en 1", tagline:"Menos calambres, más energía y mejor rendimiento",
     benefits:["Ayuda a disminuir los calambres musculares","Favorece la recuperación tras la actividad física","Apoya la hidratación y el equilibrio mineral","Ideal para personas activas y deportistas"],
-    chips:["Calambres","Recuperación","Deporte"], price:"74.900", tag:"Deportistas", accent:"#6E8B6E" },
+    chips:["Calambres","Recuperación","Deporte"], price:"74.900", oldPrice:"99.900", tag:"Deportistas", accent:"#6E8B6E" },
 ];
 
 const TESTIMONIALS = [
-  { name:"Valentina R.", role:"Bogotá", stars:5, text:"Mi piel cambió por completo en dos meses. El colágeno de SAMIRA ya es parte de mi ritual diario." },
-  { name:"Daniela M.", role:"Medellín", stars:5, text:"Por fin un Omega 3 que no sabe mal y de verdad siento la diferencia en mi energía." },
-  { name:"Carolina S.", role:"Cali", stars:5, text:"Duermo muchísimo mejor desde que tomo el magnesio. Me siento más tranquila y descansada." },
-  { name:"Andrea L.", role:"Barranquilla", stars:5, text:"Mis uñas y mi cabello están más fuertes que nunca. SAMIRA se volvió parte de mí." },
+  { name:"Valentina R.", role:"Bogotá", stars:5, text:"Tomo el Citrato de Magnesio hace un mes y por fin duermo bien y amanezco con energía. ¡Me encantó!" },
+  { name:"Andrés M.", role:"Medellín", stars:5, text:"El Omega 3 me ayudó muchísimo con la concentración en el trabajo. Y el envío llegó rapidísimo." },
+  { name:"Carolina S.", role:"Cali", stars:5, text:"Pedí el Resveratrol por WhatsApp y la asesoría fue excelente. Siento mi piel más fresca y descansada." },
+  { name:"Jorge L.", role:"Barranquilla", stars:5, text:"El Magnesio con Potasio me quitó los calambres del gym. Buen precio y pago contra entrega, mil gracias." },
 ];
 
 const HERO_WORDS = ["tu energía", "tu descanso", "tu corazón", "tus huesos", "tu vitalidad"];
@@ -115,22 +115,30 @@ function bottleSVG(p){
 
 (function renderProducts(){
   const grid = $("#productGrid"); if(!grid) return;
-  grid.innerHTML = PRODUCTS.map((p,i) => `
+  const num = s => parseInt(String(s).replace(/\D/g, ""), 10) || 0;
+  grid.innerHTML = PRODUCTS.map((p,i) => {
+    const off = p.oldPrice ? Math.round((1 - num(p.price) / num(p.oldPrice)) * 100) : 0;
+    return `
     <article class="pcard reveal reveal--pop" data-d="${i%3}" style="--pc:${p.accent}">
       ${p.tag ? `<span class="pcard__tag">${p.tag}</span>` : ""}
+      ${off ? `<span class="pcard__off">-${off}%</span>` : ""}
       <div class="pcard__visual"><span class="pcard__halo"></span><img class="pcard__img" src="assets/products/${p.img}" alt="${p.name}" loading="lazy" width="250" height="460" /></div>
       <h3 class="pcard__name">${p.name}</h3>
       <p class="pcard__tagline">${p.tagline}</p>
       <ul class="pcard__benefits">${p.benefits.map(b=>`<li>${b}</li>`).join("")}</ul>
       <div class="pcard__chips">${p.chips.map(c=>`<span>${c}</span>`).join("")}</div>
       <div class="pcard__foot">
-        <span class="pcard__price">$${p.price}<small>COP</small></span>
+        <span class="pcard__prices">
+          ${p.oldPrice ? `<span class="pcard__old">$${p.oldPrice}</span>` : ""}
+          <span class="pcard__price">$${p.price}<small>COP</small></span>
+        </span>
         <button class="pcard__buy" data-add="${i}" aria-label="Agregar ${p.name} a mi pedido">
           Agregar
           <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M12 5v14M5 12h14"/></svg>
         </button>
       </div>
-    </article>`).join("");
+    </article>`;
+  }).join("");
 })();
 
 (function renderTestimonials(){
