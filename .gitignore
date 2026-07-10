@@ -6,3 +6,7 @@ desktop.ini
 .vscode/
 .idea/
 .playwright-mcp/
+
+# Materiales fuente (imágenes/videos originales) — no versionar
+_material-extra/
+_material-suplementos/

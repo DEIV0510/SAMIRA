@@ -15,19 +15,19 @@ const CONFIG = {
 const PRODUCTS = [
   { img:"omega3.webp", name:"Omega 3 1300 mg", tagline:"Cuida tu corazón, mente y cuerpo en una sola cápsula",
     benefits:["Apoya la salud cardiovascular","Favorece la memoria y la concentración","Bienestar de articulaciones y visión","Enriquecido con vitaminas A, D y E"],
-    chips:["Corazón","Memoria","A·D·E"], price:"60.000", oldPrice:"109.900", tag:"Más vendido", accent:"#C2A36B" },
+    chips:["Corazón","Memoria","A·D·E"], price:"60.000", oldPrice:"70.000", tag:"Más vendido", accent:"#C2A36B" },
   { img:"magnesio.webp", name:"Citrato de Magnesio", tagline:"Recupera tu energía y dile adiós al cansancio",
     benefits:["Reduce el cansancio físico y mental","Favorece la relajación y el descanso","Apoya el funcionamiento de músculos y nervios","Ideal para rutinas exigentes"],
-    chips:["Energía","Descanso","Músculos"], price:"60.000", oldPrice:"94.900", accent:"#8FCFAE" },
+    chips:["Energía","Descanso","Músculos"], price:"60.000", oldPrice:"70.000", accent:"#8FCFAE" },
   { img:"resveratrol.webp", name:"Resveratrol Plus 1600 mg", tagline:"El antioxidante que te ayuda a mantenerte joven por más tiempo",
     benefits:["Combate los efectos del estrés oxidativo","Protege las células del envejecimiento","Favorece la salud cardiovascular","Apoya tu bienestar general"],
-    chips:["Antioxidante","Antiedad","Uva roja"], price:"60.000", oldPrice:"119.900", tag:"Antiedad", accent:"#E79DAE" },
+    chips:["Antioxidante","Antiedad","Uva roja"], price:"60.000", oldPrice:"70.000", tag:"Antiedad", accent:"#E79DAE" },
   { img:"calcio.webp", name:"Calcio + Vitamina D3", tagline:"Huesos fuertes para seguir disfrutando la vida",
     benefits:["Ayuda a fortalecer huesos y dientes","Mejor absorción gracias a la Vitamina D3","Contribuye al buen funcionamiento muscular","Ideal para adultos y personas mayores"],
-    chips:["Huesos","Vit D3","Movilidad"], price:"60.000", oldPrice:"89.900", accent:"#E8896B" },
+    chips:["Huesos","Vit D3","Movilidad"], price:"60.000", oldPrice:"70.000", accent:"#E8896B" },
   { img:"magnesio-potasio.webp", name:"Magnesio y Potasio 5 en 1", tagline:"Menos calambres, más energía y mejor rendimiento",
     benefits:["Ayuda a disminuir los calambres musculares","Favorece la recuperación tras la actividad física","Apoya la hidratación y el equilibrio mineral","Ideal para personas activas y deportistas"],
-    chips:["Calambres","Recuperación","Deporte"], price:"60.000", oldPrice:"99.900", tag:"Deportistas", accent:"#6E8B6E" },
+    chips:["Calambres","Recuperación","Deporte"], price:"60.000", oldPrice:"70.000", tag:"Deportistas", accent:"#6E8B6E" },
 ];
 
 const TESTIMONIALS = [
