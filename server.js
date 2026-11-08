@@ -1,4 +1,4 @@
-/* Mini static server para previsualizar SAMIRA — node server.js  (http://localhost:5200) */
+/* Mini servidor estático para previsualizar WellNen — node server.js  (http://localhost:5200) */
 const http = require("http");
 const fs = require("fs");
 const path = require("path");
@@ -21,4 +21,4 @@ http.createServer((req, res) => {
       "Cache-Control": "no-store" });
     res.end(data);
   });
-}).listen(PORT, () => console.log(`SAMIRA → http://localhost:${PORT}`));
+}).listen(PORT, () => console.log(`WellNen → http://localhost:${PORT}`));

@@ -1,465 +1,279 @@
 /* ============================================================
-   SAMIRA · Bienestar desde adentro — script.js
+   WellNen · Bienestar · Energía · Equilibrio — script.js
    ============================================================ */
+clearTimeout(window.__wnShowAll); // el JS llegó: se cancela la red de seguridad del <head>
 
 /* -------------------------------------------------------------
-   1) CONFIGURACIÓN  ←  EDITA AQUÍ
+   1) CONFIGURACIÓN — edita aquí
    ------------------------------------------------------------- */
 const CONFIG = {
-  // Número de WhatsApp (formato: 57 + número, sin +, espacios ni guiones)
-  whatsapp: "573145093256",
+  whatsapp: "573145093256", // 57 + número, sin +, espacios ni guiones
   instagram: "https://www.instagram.com/samira.bienestar/",
 };
 
-// Productos — edita nombres, textos, imágenes y PRECIOS aquí
+/* Productos — nombre, textos, foto y PRECIOS (en pesos, sin puntos).
+   pillar: "Bienestar" | "Energía" | "Equilibrio"  ·  tag: etiqueta opcional sobre la foto */
 const PRODUCTS = [
-  { img:"omega3.webp", name:"Omega 3 1300 mg", tagline:"Cuida tu corazón, mente y cuerpo en una sola cápsula",
-    benefits:["Apoya la salud cardiovascular","Favorece la memoria y la concentración","Bienestar de articulaciones y visión","Enriquecido con vitaminas A, D y E"],
-    chips:["Corazón","Memoria","A·D·E"], price:"60.000", oldPrice:"70.000", tag:"Más vendido", accent:"#C2A36B" },
-  { img:"magnesio.webp", name:"Citrato de Magnesio", tagline:"Recupera tu energía y dile adiós al cansancio",
-    benefits:["Reduce el cansancio físico y mental","Favorece la relajación y el descanso","Apoya el funcionamiento de músculos y nervios","Ideal para rutinas exigentes"],
-    chips:["Energía","Descanso","Músculos"], price:"60.000", oldPrice:"70.000", accent:"#8FCFAE" },
-  { img:"resveratrol.webp", name:"Resveratrol Plus 1600 mg", tagline:"El antioxidante que te ayuda a mantenerte joven por más tiempo",
-    benefits:["Combate los efectos del estrés oxidativo","Protege las células del envejecimiento","Favorece la salud cardiovascular","Apoya tu bienestar general"],
-    chips:["Antioxidante","Antiedad","Uva roja"], price:"60.000", oldPrice:"70.000", tag:"Antiedad", accent:"#E79DAE" },
-  { img:"calcio.webp", name:"Calcio + Vitamina D3", tagline:"Huesos fuertes para seguir disfrutando la vida",
-    benefits:["Ayuda a fortalecer huesos y dientes","Mejor absorción gracias a la Vitamina D3","Contribuye al buen funcionamiento muscular","Ideal para adultos y personas mayores"],
-    chips:["Huesos","Vit D3","Movilidad"], price:"60.000", oldPrice:"70.000", accent:"#E8896B" },
-  { img:"magnesio-potasio.webp", name:"Magnesio y Potasio 5 en 1", tagline:"Menos calambres, más energía y mejor rendimiento",
-    benefits:["Ayuda a disminuir los calambres musculares","Favorece la recuperación tras la actividad física","Apoya la hidratación y el equilibrio mineral","Ideal para personas activas y deportistas"],
-    chips:["Calambres","Recuperación","Deporte"], price:"60.000", oldPrice:"70.000", tag:"Deportistas", accent:"#6E8B6E" },
+  { id:"nad", img:"nad-resveratrol.webp", w:433, name:"NAD+ y Resveratrol", pillar:"Energía", tag:"Nuevo",
+    hook:"¿Sientes que ya no tienes la misma energía?",
+    line:"Energía celular para tus días más activos. Nicotinamida y resveratrol en una gomita liposomal.",
+    benefits:[
+      "Aporta nicotinamida, precursora del NAD+ que tus células usan para producir energía.",
+      "Con resveratrol, un antioxidante de origen vegetal.",
+      "Fórmula liposomal en gomitas masticables.",
+      "1.500 mg por porción (2 gomitas).",
+    ], price:60000, oldPrice:70000 },
+  { id:"omega3", img:"omega3.webp", w:414, name:"Omega 3", pillar:"Bienestar",
+    hook:"El básico que tu rutina necesita.",
+    line:"Para tu corazón, tu mente y tu día a día, en una gomita masticable con relleno líquido.",
+    benefits:[
+      "Aporta ácidos grasos omega 3 a tu alimentación.",
+      "Ayuda a cuidar la salud de tu corazón.",
+      "Apoya la memoria y la concentración.",
+      "Fácil de tomar: gomita con relleno líquido.",
+    ], price:60000, oldPrice:70000 },
+  { id:"magnesio-potasio", img:"magnesio-potasio.webp", w:452, name:"Magnesio y Potasio 5 en 1", pillar:"Equilibrio",
+    hook:"Menos calambres, más rendimiento.",
+    line:"Cinco fuentes de magnesio y potasio para tus músculos, antes y después del ejercicio.",
+    benefits:[
+      "Ayuda a disminuir los calambres musculares.",
+      "Apoya la recuperación después de la actividad física.",
+      "Apoya la hidratación y el equilibrio mineral.",
+      "Citrato, glicinato y cloruro de magnesio; citrato y cloruro de potasio.",
+    ], price:60000, oldPrice:70000 },
 ];
 
-const TESTIMONIALS = [
-  { name:"Valentina R.", role:"Bogotá", stars:5, text:"Tomo el Citrato de Magnesio hace un mes y por fin duermo bien y amanezco con energía. ¡Me encantó!" },
-  { name:"Andrés M.", role:"Medellín", stars:5, text:"El Omega 3 me ayudó muchísimo con la concentración en el trabajo. Y el envío llegó rapidísimo." },
-  { name:"Carolina S.", role:"Cali", stars:5, text:"Pedí el Resveratrol por WhatsApp y la asesoría fue excelente. Siento mi piel más fresca y descansada." },
-  { name:"Jorge L.", role:"Barranquilla", stars:5, text:"El Magnesio con Potasio me quitó los calambres del gym. Buen precio y pago contra entrega, mil gracias." },
-];
+const ICON = { "Bienestar":"#i-bienestar", "Energía":"#i-energia", "Equilibrio":"#i-equilibrio" };
 
-const HERO_WORDS = ["tu energía", "tu descanso", "tu corazón", "tus huesos", "tu vitalidad"];
+/* -------------------------------------------------------------
+   2) Utilidades
+   ------------------------------------------------------------- */
+const $  = (s, c = document) => c.querySelector(s);
+const $$ = (s, c = document) => [...c.querySelectorAll(s)];
+const fmt = (n) => "$" + Number(n).toLocaleString("es-CO");
+const waLink = (msg) => `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(msg || "Hola WellNen, quiero información sobre sus suplementos.")}`;
 
-const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-const finePointer  = window.matchMedia("(hover:hover) and (pointer:fine)").matches;
-const waLink = (msg) => `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(msg || "Hola SAMIRA 🌿")}`;
-const $  = (s, c=document) => c.querySelector(s);
-const $$ = (s, c=document) => [...c.querySelectorAll(s)];
-
-/* ============================================================
-   2) PRELOADER — el logo real se revela con un destello dorado
-   ============================================================ */
-(function preloader(){
-  const pre = $("#preloader");
-  const bar = $("#plBar");
-  const pct = $("#plPct");
-  if(!pre) return;
-
-  document.body.style.overflow = "hidden";
-
-  // la revelación del logo (barrido) y el destello dorado son 100% CSS; aquí solo el progreso
-  const DURATION = reduceMotion ? 600
-    : (location.search.includes("slow") ? 11000 : 3000);
-  let startT = null, done = false;
-  function finish(){
-    if(done) return; done = true;
-    bar.style.width = "100%"; pct.textContent = 100;
-    document.body.style.overflow = "";
-    document.body.classList.add("loaded");
-    pre.classList.add("is-done");
-    setTimeout(() => pre.remove(), 780);
-    startHeroSwap();
-  }
-  function tick(t){
-    if(startT === null) startT = t;
-    const p = Math.min(100, ((t - startT) / DURATION) * 100);
-    bar.style.width = p + "%";
-    pct.textContent = Math.round(p);
-    if(p < 100) requestAnimationFrame(tick);
-    else setTimeout(finish, 200);
-  }
-  requestAnimationFrame(tick);
-  setTimeout(finish, DURATION + 4000);            // red de seguridad
-})();
-
-/* ============================================================
-   3) RENDER — products & testimonials
-   ============================================================ */
-function bottleSVG(p){
-  const a = p.accent;
-  if(p.type === "jar"){
-    return `<svg viewBox="0 0 200 260" class="pcard__bottle" aria-hidden="true">
-      <rect x="64" y="14" width="72" height="26" rx="7" fill="#1d2f24"/>
-      <rect x="44" y="44" width="112" height="180" rx="20" fill="#2E4636"/>
-      <rect x="50" y="50" width="20" height="168" rx="10" fill="#ffffff" opacity=".10"/>
-      <rect x="56" y="92" width="88" height="100" rx="10" fill="#F4F2EA"/>
-      <text x="100" y="120" text-anchor="middle" style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;letter-spacing:3px;fill:#2E4636">SAMIRA</text>
-      <line x1="72" y1="132" x2="128" y2="132" stroke="${a}" stroke-width="2"/>
-      <text x="100" y="152" text-anchor="middle" style="font-family:'Jost',sans-serif;font-size:12px;font-weight:500;letter-spacing:1.5px;fill:#2E4636">${p.short}</text>
-      <text x="100" y="170" text-anchor="middle" style="font-family:'Jost',sans-serif;font-size:7px;letter-spacing:1px;fill:#6E8B6E">${p.sub}</text>
-      <rect x="72" y="182" width="56" height="4" rx="2" fill="${a}" opacity=".7"/>
-    </svg>`;
-  }
-  return `<svg viewBox="0 0 160 280" class="pcard__bottle" aria-hidden="true">
-    <rect x="58" y="10" width="44" height="22" rx="5" fill="${a}"/>
-    <rect x="64" y="30" width="32" height="16" fill="#1d2f24" opacity=".5"/>
-    <rect x="40" y="46" width="80" height="212" rx="22" fill="#3f5c46"/>
-    <rect x="46" y="52" width="14" height="198" rx="7" fill="#ffffff" opacity=".12"/>
-    <rect x="50" y="96" width="60" height="124" rx="10" fill="#F4F2EA"/>
-    <text x="80" y="124" text-anchor="middle" style="font-family:'Cormorant Garamond',serif;font-size:13px;font-weight:600;letter-spacing:2px;fill:#2E4636">SAMIRA</text>
-    <line x1="62" y1="134" x2="98" y2="134" stroke="${a}" stroke-width="1.6"/>
-    <text x="80" y="156" text-anchor="middle" style="font-family:'Jost',sans-serif;font-size:10px;font-weight:500;letter-spacing:1px;fill:#2E4636">${p.short}</text>
-    <text x="80" y="172" text-anchor="middle" style="font-family:'Jost',sans-serif;font-size:6px;letter-spacing:1px;fill:#6E8B6E">${p.sub}</text>
-    <circle cx="80" cy="200" r="9" fill="${a}" opacity=".85"/>
-  </svg>`;
-}
-
+/* -------------------------------------------------------------
+   3) Productos
+   ------------------------------------------------------------- */
 (function renderProducts(){
-  const grid = $("#productGrid"); if(!grid) return;
-  const num = s => parseInt(String(s).replace(/\D/g, ""), 10) || 0;
-  grid.innerHTML = PRODUCTS.map((p,i) => {
-    const off = p.oldPrice ? Math.round((1 - num(p.price) / num(p.oldPrice)) * 100) : 0;
-    return `
-    <article class="pcard reveal reveal--pop" data-d="${i%3}" style="--pc:${p.accent}">
-      ${p.tag ? `<span class="pcard__tag">${p.tag}</span>` : ""}
-      ${off ? `<span class="pcard__off">-${off}%</span>` : ""}
-      <div class="pcard__visual"><span class="pcard__halo"></span><img class="pcard__img" src="assets/products/${p.img}" alt="${p.name}" loading="lazy" width="250" height="460" /></div>
-      <h3 class="pcard__name">${p.name}</h3>
-      <p class="pcard__tagline">${p.tagline}</p>
-      <ul class="pcard__benefits">${p.benefits.map(b=>`<li>${b}</li>`).join("")}</ul>
-      <div class="pcard__chips">${p.chips.map(c=>`<span>${c}</span>`).join("")}</div>
-      <div class="pcard__foot">
-        <span class="pcard__prices">
-          ${p.oldPrice ? `<span class="pcard__old">$${p.oldPrice}</span>` : ""}
-          <span class="pcard__price">$${p.price}<small>COP</small></span>
-        </span>
-        <button class="pcard__buy" data-add="${i}" aria-label="Agregar ${p.name} a mi pedido">
-          Agregar
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M12 5v14M5 12h14"/></svg>
-        </button>
+  const list = $("#productList");
+  if(!list) return;
+  list.innerHTML = PRODUCTS.map((p, i) => `
+    <article class="feat reveal${i % 2 ? " feat--dark feat--flip" : ""}" id="p-${p.id}">
+      <div class="feat__media">
+        <span class="feat__band" aria-hidden="true"></span>
+        <span class="feat__ring" aria-hidden="true"></span>
+        <span class="feat__disc" aria-hidden="true"></span>
+        ${p.tag ? `<span class="feat__tag">${p.tag}</span>` : ""}
+        <img src="assets/products/${p.img}" alt="${p.name}" width="${p.w}" height="820" loading="${i ? "lazy" : "eager"}" decoding="async" />
       </div>
-    </article>`;
-  }).join("");
-})();
-
-(function renderTestimonials(){
-  const grid = $("#testimonialGrid"); if(!grid) return;
-  const star = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.2 6.8.8-5 4.6 1.3 6.7L12 17.8 5.9 20.3l1.3-6.7-5-4.6 6.8-.8z"/></svg>`;
-  grid.innerHTML = TESTIMONIALS.map((t,i) => `
-    <article class="tcard reveal" data-d="${i%4}">
-      <div class="tcard__stars" aria-label="${t.stars} de 5 estrellas">${star.repeat(t.stars)}</div>
-      <p class="tcard__text">“${t.text}”</p>
-      <div class="tcard__who">
-        <span class="tcard__ava" aria-hidden="true">${t.name.charAt(0)}</span>
-        <span><span class="tcard__name">${t.name}</span><br><span class="tcard__role">${t.role}</span></span>
+      <div class="feat__body">
+        <p class="feat__pillar"><svg viewBox="0 0 32 32" aria-hidden="true"><use href="${ICON[p.pillar]}"/></svg>${p.pillar}</p>
+        <h3 class="feat__name">${p.name}</h3>
+        <p class="feat__hook">${p.hook}</p>
+        <p class="feat__line">${p.line}</p>
+        <ul class="feat__list">
+          ${p.benefits.map(b => `<li><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg>${b}</li>`).join("")}
+        </ul>
+        <div class="feat__buy">
+          <p class="feat__price">
+            <strong><span class="sr">Ahora </span>${fmt(p.price)}</strong>
+            ${p.oldPrice ? `<span class="feat__was"><s><span class="sr">Antes </span>${fmt(p.oldPrice)}</s><span class="feat__save">Ahorras ${fmt(p.oldPrice - p.price)}</span></span>` : ""}
+          </p>
+          <div class="feat__ctas">
+            <button class="btn ${i % 2 ? "btn--lima" : "btn--primary"} feat__add" type="button" data-add="${p.id}">
+              <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg><span>Agregar al pedido</span>
+            </button>
+            <a class="btn ${i % 2 ? "btn--line-claro" : "btn--line"}" data-wa="Hola WellNen, quiero pedir ${p.name} (${fmt(p.price)}). Mi ciudad es: " href="#contacto">
+              <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg> Pedir por WhatsApp
+            </a>
+          </div>
+          <p class="feat__trust">Envío gratis a toda Colombia · Pago contra entrega</p>
+        </div>
       </div>
     </article>`).join("");
 })();
 
-/* ============================================================
-   4) WHATSAPP wiring (all [data-wa])
-   ============================================================ */
-$$("[data-wa]").forEach(el => { el.href = waLink(el.dataset.wa); el.target = "_blank"; el.rel = "noopener"; });
-const ig = $("#igLink"); if(ig) ig.href = CONFIG.instagram;
-const yr = $("#year"); if(yr) yr.textContent = new Date().getFullYear();
+/* -------------------------------------------------------------
+   4) Enlaces de WhatsApp e Instagram
+   ------------------------------------------------------------- */
+$$("[data-wa]").forEach(a => {
+  a.href = waLink(a.dataset.wa);
+  a.target = "_blank";
+  a.rel = "noopener";
+});
+const ig = $("#igLink");
+if(ig) ig.href = CONFIG.instagram;
+const yr = $("#year");
+if(yr) yr.textContent = new Date().getFullYear();
 
-/* ============================================================
-   5) HEADER · mobile menu · back-to-top
-   ============================================================ */
-const header = $("#header"), nav = $("#nav"), burger = $("#burger"), toTop = $("#toTop");
-const progress = $("#scrollProgress");
-const onScroll = () => {
-  const y = scrollY;
-  header.classList.toggle("is-stuck", y > 30);
-  toTop.classList.toggle("is-on", y > 700);
-  if (progress) { const h = document.documentElement.scrollHeight - innerHeight; progress.style.transform = `scaleX(${h > 0 ? y / h : 0})`; }
-};
-addEventListener("scroll", onScroll, {passive:true}); onScroll();
+/* -------------------------------------------------------------
+   5) Encabezado y menú móvil
+   ------------------------------------------------------------- */
+const header = $("#header"), nav = $("#nav"), burger = $("#burger");
+let ticking = false;
+function onScroll(){
+  if(ticking) return;
+  ticking = true;
+  requestAnimationFrame(() => {
+    header?.classList.toggle("is-scrolled", scrollY > 8);
+    sweep();
+    ticking = false;
+  });
+}
 
-function closeMenu(){ nav.classList.remove("is-open"); burger.setAttribute("aria-expanded","false"); document.body.classList.remove("menu-open"); }
-burger?.addEventListener("click", () => {
-  const open = nav.classList.toggle("is-open");
-  burger.setAttribute("aria-expanded", open);
+function setMenu(open){
+  nav.classList.toggle("is-open", open);
+  burger.setAttribute("aria-expanded", String(open));
+  burger.setAttribute("aria-label", open ? "Cerrar menú" : "Abrir menú");
   document.body.classList.toggle("menu-open", open);
-});
-$$("#nav a").forEach(a => a.addEventListener("click", closeMenu));
-$("#navClose")?.addEventListener("click", closeMenu);
-addEventListener("keydown", e => { if(e.key === "Escape") closeMenu(); });
-toTop?.addEventListener("click", () => scrollTo({top:0, behavior: reduceMotion ? "auto":"smooth"}));
-
-/* ============================================================
-   6) REVEAL on scroll + STAT counters
-   ============================================================ */
-const io = new IntersectionObserver((entries) => {
-  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add("is-in"); io.unobserve(e.target); } });
-}, {threshold:0.14, rootMargin:"0px 0px -8% 0px"});
-$$(".reveal").forEach(el => io.observe(el));
-
-function animateCount(el){
-  const target = parseFloat(el.dataset.count);
-  const dec = parseInt(el.dataset.decimals||"0",10);
-  const suffix = el.dataset.suffix||"";
-  if(reduceMotion){ el.textContent = target.toFixed(dec)+suffix; return; }
-  const dur = 1600; let s=null;
-  const step = (t) => {
-    if(s===null) s=t; const p = Math.min(1,(t-s)/dur);
-    const eased = 1-Math.pow(1-p,3);
-    el.textContent = (target*eased).toFixed(dec) + suffix;
-    if(p<1) requestAnimationFrame(step); else el.textContent = target.toFixed(dec)+suffix;
-  };
-  requestAnimationFrame(step);
 }
-const statIO = new IntersectionObserver((entries) => {
-  entries.forEach(e => { if(e.isIntersecting){ animateCount(e.target); statIO.unobserve(e.target); } });
-}, {threshold:0.6});
-$$(".stat__num").forEach(el => statIO.observe(el));
+burger?.addEventListener("click", () => setMenu(!nav.classList.contains("is-open")));
+$$("#nav a").forEach(a => a.addEventListener("click", () => setMenu(false)));
+addEventListener("keydown", e => { if(e.key === "Escape" && nav.classList.contains("is-open")) setMenu(false); });
+matchMedia("(min-width: 861px)").addEventListener("change", e => { if(e.matches) setMenu(false); });
 
-/* ============================================================
-   7) HERO kinetic word swap
-   ============================================================ */
-let heroSwapStarted = false;
-function startHeroSwap(){
-  if(heroSwapStarted || reduceMotion) return; heroSwapStarted = true;
-  const wrap = $("#heroSwap"); if(!wrap) return;
-  // build words & lock width to the widest to avoid layout shift
-  wrap.innerHTML = HERO_WORDS.map((w,i)=>`<span class="swap__word${i===0?" is-on":""}">${w}</span>`).join("");
-  const words = $$(".swap__word", wrap);
-  let max = 0; words.forEach(w => { max = Math.max(max, w.offsetWidth); });
-  wrap.style.width = max + "px";
-  let i = 0;
-  setInterval(() => {
-    const cur = words[i]; i = (i+1)%words.length; const nxt = words[i];
-    cur.classList.add("is-out"); cur.classList.remove("is-on");
-    nxt.classList.remove("is-out"); nxt.classList.add("is-on");
-    setTimeout(() => cur.classList.remove("is-out"), 600);
-  }, 2400);
-}
-if(reduceMotion){ const w = $("#heroSwap .swap__word"); if(w) w.classList.add("is-on"); }
-
-/* ============================================================
-   8) DESKTOP delights — cursor · magnetic · tilt · parallax
-   ============================================================ */
-if(finePointer && !reduceMotion){
-  document.body.classList.add("cursor-on");
-  const cur = $("#cursor"), dot = $(".cursor__dot"), ring = $(".cursor__ring");
-  let rx=0, ry=0, mx=0, my=0;
-  addEventListener("pointermove", e => {
-    mx=e.clientX; my=e.clientY;
-    dot.style.transform = `translate(${mx}px,${my}px)`;
-  });
-  (function ringLoop(){ rx += (mx-rx)*0.18; ry += (my-ry)*0.18; ring.style.transform = `translate(${rx}px,${ry}px)`; requestAnimationFrame(ringLoop); })();
-  $$("a, button, .pcard, .benefit, .tcard, [data-tilt], summary").forEach(el => {
-    el.addEventListener("pointerenter", () => cur.classList.add("is-hover"));
-    el.addEventListener("pointerleave", () => cur.classList.remove("is-hover"));
-  });
-
-  // magnetic buttons
-  $$(".magnetic").forEach(el => {
-    el.addEventListener("pointermove", e => {
-      const r = el.getBoundingClientRect();
-      const x = e.clientX - r.left - r.width/2, y = e.clientY - r.top - r.height/2;
-      el.style.transform = `translate(${x*0.25}px, ${y*0.35}px)`;
-    });
-    el.addEventListener("pointerleave", () => { el.style.transform = ""; });
-  });
-
-  // tilt
-  $$("[data-tilt]").forEach(el => {
-    el.addEventListener("pointermove", e => {
-      const r = el.getBoundingClientRect();
-      const x = (e.clientX-r.left)/r.width-0.5, y = (e.clientY-r.top)/r.height-0.5;
-      el.style.transform = `perspective(700px) rotateY(${x*14}deg) rotateX(${-y*14}deg)`;
-    });
-    el.addEventListener("pointerleave", () => { el.style.transform = ""; });
-  });
-
-  // pointer parallax for floating leaves / blobs
-  const layers = $$("[data-parallax]");
-  addEventListener("pointermove", e => {
-    const cx = (e.clientX/innerWidth-0.5), cy = (e.clientY/innerHeight-0.5);
-    layers.forEach(l => { const d = parseFloat(l.dataset.parallax)*100; l.style.transform = `translate(${cx*d}px, ${cy*d}px)`; });
+/* -------------------------------------------------------------
+   6) Aparición al hacer scroll (barrido propio, sin IntersectionObserver)
+   ------------------------------------------------------------- */
+let pending = $$(".reveal");
+function sweep(){
+  if(!pending.length) return;
+  const limit = innerHeight * 0.92;
+  pending = pending.filter(el => {
+    if(el.getBoundingClientRect().top < limit){ el.classList.add("is-in"); return false; }
+    return true;
   });
 }
+addEventListener("scroll", onScroll, { passive:true });
+addEventListener("resize", onScroll);
+addEventListener("load", sweep);
+sweep();
+header?.classList.toggle("is-scrolled", scrollY > 8);
 
-/* ============================================================
-   9) FAQ — single-open accordion (si existe)
-   ============================================================ */
-$$("#faqList details").forEach(d => {
-  d.addEventListener("toggle", () => {
-    if(d.open) $$("#faqList details").forEach(o => { if(o!==d) o.open = false; });
-  });
-});
-
-/* ============================================================
-   10) ✨ Chispas de dopamina al hacer clic en los CTA
-   ============================================================ */
-if(!reduceMotion){
-  const SPARK_COLORS = ["#C2A36B","#E8896B","#8FCFAE","#E79DAE","#d8bf94","#6E8B6E"];
-  function sparkBurst(x, y){
-    const n = 16;
-    for(let i=0;i<n;i++){
-      const s = document.createElement("span");
-      s.className = "spark";
-      s.style.left = x + "px"; s.style.top = y + "px";
-      s.style.background = SPARK_COLORS[i % SPARK_COLORS.length];
-      const ang = (Math.PI*2/n)*i + Math.random()*0.6;
-      const dist = 55 + Math.random()*80;
-      const dx = Math.cos(ang)*dist, dy = Math.sin(ang)*dist - 10;
-      document.body.appendChild(s);
-      s.animate([
-        { transform:"translate(-50%,-50%) scale(1) rotate(0deg)", opacity:1 },
-        { transform:`translate(calc(-50% + ${dx}px),calc(-50% + ${dy}px)) scale(0) rotate(240deg)`, opacity:0 }
-      ], { duration: 700 + Math.random()*350, easing:"cubic-bezier(.22,1,.36,1)" });
-      setTimeout(() => s.remove(), 1100);
-    }
-  }
-  addEventListener("click", (e) => {
-    const t = e.target.closest(".pcard__buy, .btn--solid, .wa-float, [data-wa]");
-    if(t) sparkBurst(e.clientX, e.clientY);
-  }, true);
-}
-
-/* ============================================================
-   11) 🛒 CARRITO + pedido automático por WhatsApp
-   ============================================================ */
+/* -------------------------------------------------------------
+   7) Pedido (carrito) → mensaje de WhatsApp automático
+   ------------------------------------------------------------- */
 (function cartModule(){
-  const KEY = "samira_cart";
+  const KEY = "wellnen_cart";
+  const byId = Object.fromEntries(PRODUCTS.map(p => [p.id, p]));
   const btn = $("#cartBtn"), count = $("#cartCount"), root = $("#cart"), overlay = $("#cartOverlay"),
         closeBtn = $("#cartClose"), itemsEl = $("#cartItems"), emptyEl = $("#cartEmpty"),
-        footEl = $("#cartFoot"), totalEl = $("#cartTotal"), checkout = $("#cartCheckout");
+        footEl = $("#cartFoot"), totalEl = $("#cartTotal"), checkout = $("#cartCheckout"), browse = $("#cartBrowse");
   if(!btn || !root) return;
-
-  const priceNum = s => parseInt(String(s).replace(/\D/g, ""), 10) || 0;
-  const fmt = n => "$" + n.toLocaleString("es-CO");
 
   let cart = [];
   try { cart = JSON.parse(localStorage.getItem(KEY)) || []; } catch(e) { cart = []; }
-  cart = cart.filter(it => PRODUCTS[it.i]).map(it => ({ i: it.i, qty: Math.max(1, it.qty | 0) }));
+  cart = cart.filter(it => byId[it.id]).map(it => ({ id: it.id, qty: Math.max(1, it.qty | 0) }));
 
   const save = () => { try { localStorage.setItem(KEY, JSON.stringify(cart)); } catch(e) {} };
   const totalQty = () => cart.reduce((s, it) => s + it.qty, 0);
-  const totalCOP = () => cart.reduce((s, it) => s + priceNum(PRODUCTS[it.i].price) * it.qty, 0);
+  const totalCOP = () => cart.reduce((s, it) => s + byId[it.id].price * it.qty, 0);
 
   function buildMessage(){
-    const lines = cart.map(it => { const p = PRODUCTS[it.i]; return `• ${it.qty}× ${p.name} — ${fmt(priceNum(p.price) * it.qty)}`; }).join("\n");
-    return `¡Hola SAMIRA 🌿! Quiero hacer este pedido:\n\n${lines}\n\n*Total: ${fmt(totalCOP())} COP*\n\nMi nombre: \nCiudad y dirección de envío: \n\n¿Me confirmas disponibilidad? 🙌`;
+    const lines = cart.map(it => {
+      const p = byId[it.id];
+      return `• ${it.qty} x ${p.name} — ${fmt(p.price * it.qty)}`;
+    }).join("\n");
+    return `Hola WellNen, quiero hacer este pedido:\n\n${lines}\n\n*Total: ${fmt(totalCOP())}*\n\nNombre:\nCiudad:\nDirección:\n\n(Envío gratis · Pago contra entrega)`;
   }
 
-  function updateBadge(){
+  function updateBadge(bump){
     const q = totalQty();
     count.textContent = q;
     count.classList.toggle("is-on", q > 0);
-    btn.classList.remove("bump"); void btn.offsetWidth; if(q > 0) btn.classList.add("bump");
+    btn.setAttribute("aria-label", q ? `Ver tu pedido (${q} ${q === 1 ? "producto" : "productos"})` : "Ver tu pedido");
+    if(bump){ btn.classList.remove("bump"); void btn.offsetWidth; btn.classList.add("bump"); }
   }
 
-  function render(){
+  function render(bump){
     if(!cart.length){
       itemsEl.innerHTML = ""; emptyEl.hidden = false; footEl.hidden = true;
     } else {
       emptyEl.hidden = true; footEl.hidden = false;
       itemsEl.innerHTML = cart.map(it => {
-        const p = PRODUCTS[it.i];
-        return `<div class="cart__row" data-i="${it.i}">
-          <div class="cart__row-info">
-            <span class="cart__row-name">${p.name}</span>
-            <span class="cart__row-price">${fmt(priceNum(p.price))} c/u</span>
-          </div>
+        const p = byId[it.id];
+        return `<div class="cart__row" data-id="${p.id}">
+          <div class="cart__thumb"><img src="assets/products/${p.img}" alt="" width="${p.w}" height="820" /></div>
+          <p class="cart__name">${p.name}<span class="cart__unit">${fmt(p.price)} c/u</span></p>
+          <button class="cart__del" type="button" data-act="del">Quitar</button>
           <div class="cart__qty">
-            <button class="cart__qbtn" data-act="dec" aria-label="Quitar uno">−</button>
-            <span class="cart__qn">${it.qty}</span>
-            <button class="cart__qbtn" data-act="inc" aria-label="Agregar uno">+</button>
+            <button class="cart__qbtn" type="button" data-act="dec" aria-label="Quitar uno de ${p.name}">−</button>
+            <span class="cart__qn" aria-label="Cantidad">${it.qty}</span>
+            <button class="cart__qbtn" type="button" data-act="inc" aria-label="Agregar uno de ${p.name}">+</button>
           </div>
-          <span class="cart__row-total">${fmt(priceNum(p.price) * it.qty)}</span>
-          <button class="cart__row-del" data-act="del" aria-label="Eliminar">×</button>
+          <span class="cart__sub">${fmt(p.price * it.qty)}</span>
         </div>`;
       }).join("");
     }
     totalEl.textContent = fmt(totalCOP());
     checkout.href = waLink(buildMessage());
-    updateBadge();
+    updateBadge(bump);
     save();
   }
 
-  function add(i){
-    const ex = cart.find(it => it.i === i);
-    if(ex) ex.qty++; else cart.push({ i, qty: 1 });
-    render();
+  function add(id){
+    const ex = cart.find(it => it.id === id);
+    if(ex) ex.qty++; else cart.push({ id, qty: 1 });
+    render(true);
   }
 
-  // botones "Agregar" de las tarjetas (delegado)
+  // «Agregar» en las tarjetas
   document.addEventListener("click", e => {
-    const addBtn = e.target.closest("[data-add]");
-    if(!addBtn) return;
-    const i = parseInt(addBtn.dataset.add, 10);
-    if(!PRODUCTS[i]) return;
-    add(i); toast(`${PRODUCTS[i].name} agregado`);
+    const b = e.target.closest("[data-add]");
+    if(!b || !byId[b.dataset.add]) return;
+    add(b.dataset.add);
+    const label = b.querySelector("span");
+    label.dataset.t ||= label.textContent;
+    b.classList.add("is-done"); label.textContent = "Agregado";
+    clearTimeout(b._t);
+    b._t = setTimeout(() => { b.classList.remove("is-done"); label.textContent = label.dataset.t; }, 1600);
+    toast(`${byId[b.dataset.add].name} agregado`);
   });
 
-  // controles dentro del carrito (delegado)
+  // controles dentro del pedido
   itemsEl.addEventListener("click", e => {
     const act = e.target.closest("[data-act]")?.dataset.act; if(!act) return;
     const row = e.target.closest(".cart__row"); if(!row) return;
-    const i = parseInt(row.dataset.i, 10);
-    const it = cart.find(c => c.i === i); if(!it) return;
+    const it = cart.find(c => c.id === row.dataset.id); if(!it) return;
     if(act === "inc") it.qty++;
-    else if(act === "dec") { it.qty--; if(it.qty <= 0) cart = cart.filter(c => c.i !== i); }
-    else if(act === "del") cart = cart.filter(c => c.i !== i);
+    else if(act === "dec"){ it.qty--; if(it.qty <= 0) cart = cart.filter(c => c !== it); }
+    else if(act === "del") cart = cart.filter(c => c !== it);
     render();
   });
 
-  const open = () => { root.classList.add("is-open"); root.setAttribute("aria-hidden", "false"); document.body.classList.add("cart-open"); };
-  const close = () => { root.classList.remove("is-open"); root.setAttribute("aria-hidden", "true"); document.body.classList.remove("cart-open"); };
+  let lastFocus = null;
+  function open(){
+    lastFocus = document.activeElement;
+    $("#toast")?.classList.remove("is-on");
+    root.classList.add("is-open"); root.setAttribute("aria-hidden", "false");
+    document.body.classList.add("cart-open");
+    setTimeout(() => closeBtn.focus(), 60);
+  }
+  function close(){
+    if(!root.classList.contains("is-open")) return;
+    root.classList.remove("is-open"); root.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("cart-open");
+    lastFocus?.focus?.();
+  }
   btn.addEventListener("click", open);
   closeBtn.addEventListener("click", close);
   overlay.addEventListener("click", close);
+  browse?.addEventListener("click", close);
   addEventListener("keydown", e => { if(e.key === "Escape") close(); });
-  checkout.addEventListener("click", () => setTimeout(close, 500));
+  checkout.addEventListener("click", () => setTimeout(close, 400));
 
-  // mini-toast de confirmación
-  let toastEl;
+  // aviso al agregar
+  const toastEl = $("#toast");
   function toast(msg){
-    if(!toastEl){ toastEl = document.createElement("div"); toastEl.className = "cart-toast"; document.body.appendChild(toastEl); }
-    toastEl.textContent = "✓ " + msg;
-    toastEl.classList.remove("is-on"); void toastEl.offsetWidth; toastEl.classList.add("is-on");
-    clearTimeout(toastEl._t); toastEl._t = setTimeout(() => toastEl.classList.remove("is-on"), 2200);
+    if(!toastEl) return;
+    toastEl.innerHTML = `<span>${msg}</span><button type="button">Ver pedido</button>`;
+    toastEl.querySelector("button").addEventListener("click", () => { toastEl.classList.remove("is-on"); open(); });
+    toastEl.classList.add("is-on");
+    clearTimeout(toastEl._t);
+    toastEl._t = setTimeout(() => toastEl.classList.remove("is-on"), 3200);
   }
 
   render();
-})();
-
-/* ============================================================
-   12) 🧊 HERO 3D — parallax con el cursor + partículas bokeh
-   ============================================================ */
-(function hero3d(){
-  const stage3d = $("#stage3d");
-  if(stage3d && finePointer && !reduceMotion){
-    let tx = 0, ty = 0, cx = 0, cy = 0;
-    addEventListener("pointermove", e => { cx = e.clientX / innerWidth - 0.5; cy = e.clientY / innerHeight - 0.5; });
-    (function loop(){
-      tx += (cx - tx) * 0.08; ty += (cy - ty) * 0.08;
-      stage3d.style.transform = `rotateY(${tx * 16}deg) rotateX(${-ty * 12}deg)`;
-      requestAnimationFrame(loop);
-    })();
-  }
-
-  const c = $("#heroParticles");
-  if(!c || reduceMotion) return;
-  const ctx = c.getContext("2d");
-  let W = 0, H = 0, parts = [], dpr = Math.min(devicePixelRatio || 1, 2);
-  const COL = [[194,163,107],[143,207,174],[232,137,107],[231,157,174]];
-  function size(){ const r = c.getBoundingClientRect(); W = r.width; H = r.height; c.width = W * dpr; c.height = H * dpr; ctx.setTransform(dpr,0,0,dpr,0,0); }
-  function seed(){ const n = W < 520 ? 14 : 28; parts = Array.from({length:n}, () => ({ x:Math.random()*W, y:Math.random()*H, z:Math.random(), sp:Math.random()*0.35+0.08, hue:Math.floor(Math.random()*COL.length) })); }
-  function draw(){
-    ctx.clearRect(0,0,W,H);
-    parts.forEach(p => {
-      p.y -= p.sp * (0.5 + p.z); if(p.y < -12){ p.y = H + 12; p.x = Math.random()*W; }
-      const rad = (1.5 + p.z*4) * 3.5, a = 0.12 + p.z*0.4, col = COL[p.hue];
-      const g = ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,rad);
-      g.addColorStop(0, `rgba(${col[0]},${col[1]},${col[2]},${a})`);
-      g.addColorStop(1, `rgba(${col[0]},${col[1]},${col[2]},0)`);
-      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(p.x,p.y,rad,0,Math.PI*2); ctx.fill();
-    });
-    requestAnimationFrame(draw);
-  }
-  size(); seed(); draw();
-  addEventListener("resize", () => { size(); seed(); });
 })();

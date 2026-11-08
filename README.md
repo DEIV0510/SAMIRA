@@ -1,34 +1,22 @@
-# SAMIRA · Bienestar desde adentro
+# WellNen · Bienestar · Energía · Equilibrio
 
-Landing page premium para **SAMIRA**, marca de suplementos (colágeno, omega 3 y más) enfocada en el bienestar femenino.
+Tienda de una página para **WellNen**: NAD+ y Resveratrol, Omega 3 y Magnesio y Potasio 5 en 1.
+El cliente arma su pedido y lo envía por WhatsApp con productos y total ya escritos.
 
-100% HTML/CSS/JS puro — **se abre con solo dar doble clic a `index.html`**. No necesita instalar nada.
+HTML, CSS y JS puros: se abre con doble clic en `index.html` (o `node server.js` → http://localhost:5200).
 
-## 🖼️ Logo (importante)
-Para que el logo se vea idéntico al tuyo, guarda tus imágenes en la carpeta `assets/`:
+## Qué editar (arriba de `script.js`)
+- `CONFIG.whatsapp` — número (57 + número, sin espacios).
+- `CONFIG.instagram` — enlace de Instagram.
+- `PRODUCTS` — nombre, frase, beneficios, foto y precios (en pesos, sin puntos).
 
-1. **`assets/logo.png`** — tu logo a color (para el encabezado). Preferiblemente con **fondo transparente**.
-2. **`assets/logo-blanco.png`** — *(opcional)* versión en blanco/claro para el pie de página oscuro.
+## Identidad
+Tomada de `Documents/Reels con Claude/Mi estilo/WELLNEN/` (lámina de identidad, logo y logo sin fondo):
+marfil `#F8F6ED`, beige `#E9E4D7`, verde bosque `#1F3D2E`, verde salvia `#2E5A3B`,
+lima `#C5E85E` (solo acentos), dorado suave `#D9C8A5`, carbón `#1E1E1E`.
+Tipografías: Plus Jakarta Sans (titulares y textos) y Montserrat (etiquetas y botones).
 
-Si no agregas estos archivos, la página muestra automáticamente un logo de respaldo en SVG (no se rompe nada).
-La **pantalla de carga** dibuja una versión animada del emblema y luego aparece "SAMIRA".
-
-## ✍️ Qué personalizar (todo en `script.js`, arriba del archivo)
-1. **WhatsApp** → cambia `CONFIG.whatsapp` por tu número real (formato `57` + número, sin `+`, espacios ni guiones).
-2. **Precios y productos** → edita el array `PRODUCTS`.
-3. **Testimonios** → edita el array `TESTIMONIALS`.
-4. **Instagram** → ya apunta a `@samira.bienestar`.
-
-## Estructura
-- `index.html` — estructura y contenido
-- `styles.css` — diseño (verde sage/bosque + crema + dorado, Cormorant Garamond + Jost)
-- `script.js` — pantalla de carga, animaciones y datos de productos
-- `server.js` — servidor opcional para previsualizar (`node server.js` → http://localhost:5200)
-- `assets/` — tus logos (`logo.png`, `logo-blanco.png`)
-
-## Detalles
-- **Pantalla de carga**: el emblema se **dibuja trazo a trazo** y se rellena, luego aparece "SAMIRA" letra por letra. Ligera y optimizada para celular. (Tip: abre `index.html?slow` para verla en cámara lenta.)
-- Responsive, menú móvil, y respeta `prefers-reduced-motion`.
-- En escritorio: cursor personalizado, botones magnéticos, tarjetas con inclinación 3D y parallax suave.
-
-> Las imágenes de producto son ilustraciones SVG hechas a medida con la marca. Si tienes fotos reales, se pueden reemplazar.
+## Archivos
+- `assets/brand/` — wordmark del encabezado, logo claro del pie, sello circular de la pantalla de carga y favicon (la N).
+- `assets/products/` — frascos sin fondo (renders oficiales de los reels).
+- `_material-suplementos/`, `_material-extra/` — material original (no se sube al repositorio).

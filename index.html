@@ -3,319 +3,262 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>SAMIRA · Bienestar desde adentro — Colágeno, Omega 3 y suplementos premium</title>
-<meta name="description" content="SAMIRA — suplementos premium para la mujer de hoy. Colágeno, Omega 3 y más. Pide por WhatsApp con envíos a toda Colombia. Bienestar desde adentro." />
-<meta name="theme-color" content="#2E4636" />
+<title>WellNen · Suplementos para tu bienestar, energía y equilibrio</title>
+<meta name="description" content="WellNen: NAD+ y Resveratrol, Omega 3 y Magnesio y Potasio 5 en 1. A $60.000 con envío gratis a toda Colombia y pago contra entrega. Pide por WhatsApp." />
+<meta name="theme-color" content="#1F3D2E" />
 
-<!-- Open Graph / Social -->
 <meta property="og:type" content="website" />
-<meta property="og:title" content="SAMIRA · Bienestar desde adentro" />
-<meta property="og:description" content="Suplementos premium: colágeno, omega 3 y más. Pide por WhatsApp. Envíos a toda Colombia." />
+<meta property="og:site_name" content="WellNen" />
+<meta property="og:title" content="WellNen · Bienestar, energía y equilibrio" />
+<meta property="og:description" content="Suplementos a $60.000 con envío gratis a toda Colombia y pago contra entrega. Pide por WhatsApp." />
 <meta property="og:locale" content="es_CO" />
-<meta name="twitter:card" content="summary_large_image" />
 
-<!-- Favicon (logo SAMIRA) -->
-<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
-<link rel="icon" type="image/png" sizes="256x256" href="assets/favicon.png" />
-<link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="assets/brand/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="256x256" href="assets/brand/favicon.png" />
+<link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png" />
 
-<!-- Fonts -->
+<link rel="preload" as="image" href="assets/brand/wellnen-sello.webp" fetchpriority="high" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet" />
 
 <link rel="stylesheet" href="styles.css" />
+<script>
+  document.documentElement.classList.add("js");
+  /* Red de seguridad: si el JS principal no llega, a los 6 s se muestra todo. script.js la cancela al arrancar. */
+  window.__wnShowAll = setTimeout(function(){ document.documentElement.classList.add("show-all", "is-loaded"); }, 6000);
+</script>
 </head>
 <body>
 
-<!-- ===================== BARRA DE OFERTA ===================== -->
-<div class="announce" role="note">
-  <div class="announce__track">
-    <span>🚚 Envío GRATIS</span><i>✦</i>
-    <span>💳 Paga contra entrega</span><i>✦</i>
-    <span>🎁 Hasta 25% OFF en tu primer pedido</span><i>✦</i>
-    <span>⭐ +5.000 clientes felices en Colombia</span><i>✦</i>
-    <span>🚚 Envío GRATIS</span><i>✦</i>
-    <span>💳 Paga contra entrega</span><i>✦</i>
-    <span>🎁 Hasta 25% OFF en tu primer pedido</span><i>✦</i>
-    <span>⭐ +5.000 clientes felices en Colombia</span><i>✦</i>
-  </div>
+<!-- Pantalla de carga -->
+<div class="loader" id="loader" aria-hidden="true">
+  <img class="loader__logo" id="loaderLogo" src="assets/brand/wellnen-sello.webp" alt="" width="220" height="220" fetchpriority="high" decoding="sync" />
+  <span class="loader__line"><i></i></span>
+</div>
+<script>
+(function(){
+  var d = document, h = d.documentElement, L = d.getElementById("loader"), img = d.getElementById("loaderLogo");
+  if(!L || !img) return;
+  var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var MIN = reduce ? 250 : 1100, closed = false;
+  function close(){ if(closed) return; closed = true; h.classList.add("is-loaded"); setTimeout(function(){ if(L.parentNode) L.parentNode.removeChild(L); }, 800); }
+  setTimeout(close, 4000); /* tope de seguridad */
+  function raf2(cb){ requestAnimationFrame(function(){ requestAnimationFrame(cb); }); }
+  function start(){
+    L.classList.add("is-on");
+    raf2(function(){ /* logo ya pintado */
+      var go = function(){ raf2(function(){ setTimeout(close, MIN); }); };
+      if(d.readyState === "loading") d.addEventListener("DOMContentLoaded", go); else go();
+    });
+  }
+  if(img.complete && img.naturalWidth) start();
+  else { img.addEventListener("load", start); img.addEventListener("error", close); }
+})();
+</script>
+
+<div class="topbar">
+  <p>Envío gratis<span class="topbar__x"> a toda Colombia</span> <span aria-hidden="true">·</span> Pago contra entrega</p>
 </div>
 
-<div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
-
-<!-- ===================== PRELOADER ===================== -->
-<div class="preloader" id="preloader" aria-hidden="true">
-  <div class="pl-inner" id="plCore">
-    <div class="pl-logo">
-      <div class="pl-real-wrap">
-        <img class="pl-real" id="plReal" src="assets/logo-full.png" alt="SAMIRA — Bienestar desde adentro" />
-        <span class="pl-shine" aria-hidden="true"></span>
-      </div>
-    </div>
-    <div class="pl-progress"><span class="pl-bar" id="plBar"></span></div>
-    <div class="pl-pct"><span id="plPct">0</span><i>%</i></div>
-  </div>
-</div>
-
-<!-- ===================== CUSTOM CURSOR ===================== -->
-<div class="cursor" id="cursor" aria-hidden="true"><span class="cursor__dot"></span><span class="cursor__ring"></span></div>
-
-<!-- ===================== HEADER ===================== -->
 <header class="header" id="header">
-  <a href="#inicio" class="brand" aria-label="SAMIRA — Bienestar desde adentro">
-    <img class="brand__img" src="assets/logo.png" alt="SAMIRA — Bienestar desde adentro" width="150" height="54"
-         onload="this.closest('.brand').classList.add('brand--has-logo')" />
-    <span class="brand__fallback" aria-hidden="true">
-      <span class="brand__mark">
-        <svg viewBox="0 0 100 120"><path d="M50 10C28 28 27 76 50 110c23-34 22-82 0-100z" fill="currentColor"/><path d="M50 20v82" stroke="#F4F2EA" stroke-width="3.4" fill="none" stroke-linecap="round"/><path d="M50 46c-8-2-13 0-18 6M50 64c8-2 13 0 18 6" stroke="#F4F2EA" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
-      </span>
-      <span class="brand__text">SAMIRA<small>BIENESTAR DESDE ADENTRO</small></span>
-    </span>
-  </a>
-
-  <nav class="nav" id="nav" aria-label="Navegación principal">
-    <button class="nav__close" id="navClose" aria-label="Cerrar menú">
-      <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>
-    </button>
-    <a href="#inicio">Inicio</a>
-    <a href="#productos">Productos</a>
-    <a href="#contacto">Contacto</a>
-    <a class="btn btn--solid nav__cta" data-wa="Hola SAMIRA 🌿, quiero hacer un pedido.">
-      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.07L2 22l5.07-1.33A10 10 0 1 0 12 2Zm5.5 14.2c-.23.65-1.35 1.24-1.86 1.28-.5.05-.96.23-3.23-.67-2.72-1.07-4.45-3.86-4.58-4.04-.13-.18-1.1-1.46-1.1-2.79 0-1.33.7-1.98.94-2.25.24-.27.53-.34.7-.34h.5c.16 0 .38-.06.59.45.23.56.78 1.94.85 2.08.07.14.11.3.02.48-.09.18-.13.3-.27.46l-.4.47c-.13.13-.27.28-.12.54.16.27.71 1.17 1.53 1.9 1.05.93 1.93 1.22 2.2 1.36.27.13.43.11.59-.07.16-.18.68-.79.86-1.06.18-.27.36-.22.6-.13.25.09 1.58.74 1.85.88.27.13.45.2.51.31.07.11.07.64-.16 1.29Z"/></svg>
-      Pedir por WhatsApp
+  <div class="wrap header__in">
+    <a class="brand" href="#inicio" aria-label="WellNen, ir al inicio">
+      <img src="assets/brand/wellnen-wordmark.webp" alt="WellNen" width="783" height="150" />
     </a>
-  </nav>
 
-  <div class="header__actions">
-    <button class="cart-btn" id="cartBtn" aria-label="Ver mi pedido" aria-haspopup="dialog">
-      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" d="M6 8h12l-1.1 11.2a1.6 1.6 0 0 1-1.6 1.4H8.7a1.6 1.6 0 0 1-1.6-1.4L6 8Z"/><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
-      <span class="cart-btn__count" id="cartCount">0</span>
-    </button>
-    <a class="btn btn--ghost header__cta" data-wa="Hola SAMIRA 🌿, quiero hacer un pedido." href="#contacto">Pedir ahora</a>
-    <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav">
-      <span></span><span></span><span></span>
-    </button>
+    <nav class="nav" id="nav" aria-label="Principal">
+      <a href="#productos">Productos</a>
+      <a href="#como-pedir">Cómo pedir</a>
+      <a href="#contacto">Contacto</a>
+      <a class="btn btn--primary nav__wa" data-wa="Hola WellNen, quiero información sobre sus suplementos." href="#contacto">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg> Escríbenos por WhatsApp
+      </a>
+    </nav>
+
+    <div class="header__actions">
+      <button class="cart-btn" id="cartBtn" type="button" aria-label="Ver tu pedido" aria-controls="cart">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-bag"/></svg>
+        <span class="cart-btn__label">Pedido</span>
+        <span class="cart-btn__count" id="cartCount">0</span>
+      </button>
+      <button class="burger" id="burger" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav">
+        <span></span><span></span>
+      </button>
+    </div>
   </div>
 </header>
 
-<main>
-<!-- ===================== HERO ===================== -->
-<section class="hero" id="inicio">
-  <div class="hero__bg" aria-hidden="true">
-    <span class="aurora"></span>
-    <span class="blob blob--1"></span>
-    <span class="blob blob--2"></span>
-    <span class="leaf-float leaf-float--1" data-parallax="0.05"></span>
-    <span class="leaf-float leaf-float--2" data-parallax="0.09"></span>
-    <span class="leaf-float leaf-float--3" data-parallax="0.04"></span>
-    <span class="grain"></span>
-  </div>
+<main id="inicio">
 
-  <div class="hero__inner">
-    <div class="hero__copy">
-      <p class="eyebrow reveal" data-d="0"><span class="eyebrow__dot"></span> Suplementos premium · Envíos a toda Colombia</p>
-      <h1 class="hero__title reveal" data-d="1">Tu bienestar,<br /><em>desde adentro.</em></h1>
-      <p class="hero__sub reveal" data-d="2">
-        Magnesio, Omega 3, Resveratrol y más, con la calidad que tu cuerpo merece.
-        Cuida <span class="swap" id="heroSwap"><span class="swap__word is-on">tu energía</span></span> y pídelo en un clic por WhatsApp.
-      </p>
-      <div class="hero__cta reveal" data-d="3">
-        <a class="btn btn--solid magnetic" href="#productos">Ver productos</a>
-        <a class="btn btn--line magnetic" data-wa="Hola SAMIRA 🌿, quiero hacer un pedido." href="#contacto">
-          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.07L2 22l5.07-1.33A10 10 0 1 0 12 2Zm5.5 14.2c-.23.65-1.35 1.24-1.86 1.28-.5.05-.96.23-3.23-.67-2.72-1.07-4.45-3.86-4.58-4.04-.13-.18-1.1-1.46-1.1-2.79 0-1.33.7-1.98.94-2.25.24-.27.53-.34.7-.34h.5c.16 0 .38-.06.59.45.23.56.78 1.94.85 2.08.07.14.11.3.02.48-.09.18-.13.3-.27.46l-.4.47c-.13.13-.27.28-.12.54.16.27.71 1.17 1.53 1.9 1.05.93 1.93 1.22 2.2 1.36.27.13.43.11.59-.07.16-.18.68-.79.86-1.06.18-.27.36-.22.6-.13.25.09 1.58.74 1.85.88.27.13.45.2.51.31.07.11.07.64-.16 1.29Z"/></svg>
-          Pedir por WhatsApp
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero__in">
+      <div class="hero__copy">
+        <h1 class="hero__title">Tu bienestar puede ir <span class="hero__mark">más lejos.</span></h1>
+        <p class="hero__lead">Suplementos para tu energía, tu descanso y tu equilibrio. Pídelos por WhatsApp y págalos cuando te lleguen.</p>
+        <p class="hero__offer">
+          <span class="hero__price">$60.000</span>
+          <span class="hero__offer-txt">cada producto<br /><s>Antes $70.000</s></span>
+        </p>
+        <div class="hero__actions">
+          <a class="btn btn--primary" href="#productos">Ver productos</a>
+          <a class="btn btn--line" data-wa="Hola WellNen, quiero información sobre sus suplementos." href="#contacto">
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg> Escríbenos
+          </a>
+        </div>
+      </div>
+
+      <div class="hero__visual" aria-hidden="true">
+        <span class="hero__band"></span>
+        <span class="hero__ring hero__ring--1"></span>
+        <span class="hero__ring hero__ring--2"></span>
+        <span class="hero__disc"></span>
+        <span class="hero__floor"></span>
+        <img class="hero__bottle hero__bottle--l" src="assets/products/omega3.webp" alt="" width="414" height="820" />
+        <img class="hero__bottle hero__bottle--r" src="assets/products/magnesio-potasio.webp" alt="" width="452" height="820" />
+        <img class="hero__bottle hero__bottle--c" src="assets/products/nad-resveratrol.webp" alt="" width="433" height="820" fetchpriority="high" />
+      </div>
+    </div>
+  </section>
+
+  <!-- PILARES DE MARCA -->
+  <section class="pillars" aria-label="Bienestar, energía y equilibrio">
+    <div class="wrap pillars__in">
+      <a class="pillar" href="#p-omega3">
+        <svg class="pillar__ico" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-bienestar"/></svg>
+        <div><h2 class="pillar__t">Bienestar</h2><p>Omega 3</p></div>
+      </a>
+      <a class="pillar" href="#p-nad">
+        <svg class="pillar__ico" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-energia"/></svg>
+        <div><h2 class="pillar__t">Energía</h2><p>NAD+ y Resveratrol</p></div>
+      </a>
+      <a class="pillar" href="#p-magnesio-potasio">
+        <svg class="pillar__ico" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-equilibrio"/></svg>
+        <div><h2 class="pillar__t">Equilibrio</h2><p>Magnesio y Potasio 5 en 1</p></div>
+      </a>
+    </div>
+  </section>
+
+  <!-- PRODUCTOS -->
+  <section class="products" id="productos">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <h2 class="sec-title">Elige tu suplemento</h2>
+        <p class="sec-lead">Los tres a <strong>$60.000</strong> (antes $70.000). Agrega los que quieras y envía tu pedido por WhatsApp.</p>
+      </div>
+    </div>
+    <div class="feats" id="productList"></div>
+    <div class="wrap">
+      <p class="products__help reveal">¿No sabes cuál elegir? <a data-wa="Hola WellNen, ¿me ayudan a elegir el suplemento indicado para mí?" href="#contacto">Te ayudamos por WhatsApp</a></p>
+    </div>
+  </section>
+
+  <!-- CÓMO PEDIR -->
+  <section class="steps" id="como-pedir">
+    <div class="wrap">
+      <h2 class="sec-title reveal">Cómo pedir</h2>
+      <ol class="steps__list">
+        <li class="step reveal">
+          <span class="step__n">01</span>
+          <h3 class="step__t">Elige tus productos</h3>
+          <p>Agrégalos a tu pedido desde esta página.</p>
+        </li>
+        <li class="step reveal">
+          <span class="step__n">02</span>
+          <h3 class="step__t">Envía el pedido por WhatsApp</h3>
+          <p>Te llega listo con los productos y el total. Solo confirmamos tus datos.</p>
+        </li>
+        <li class="step reveal">
+          <span class="step__n">03</span>
+          <h3 class="step__t">Recibe y paga en casa</h3>
+          <p>Envío gratis a toda Colombia. Pagas cuando te llega.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section class="cta" id="contacto">
+    <span class="cta__band" aria-hidden="true"></span>
+    <span class="cta__ring" aria-hidden="true"></span>
+    <div class="wrap cta__in reveal">
+      <h2 class="cta__title">¿No sabes cuál elegir?</h2>
+      <p class="cta__lead">Cuéntanos qué buscas y te recomendamos el suplemento indicado para ti.</p>
+      <div class="cta__actions">
+        <a class="btn btn--lima" data-wa="Hola WellNen, quiero que me ayuden a elegir un suplemento." href="#contacto">
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg> Escríbenos por WhatsApp
         </a>
-      </div>
-      <ul class="hero__badges reveal" data-d="4">
-        <li>100% Natural</li>
-        <li>Sin Gluten</li>
-        <li>Pago contra entrega</li>
-      </ul>
-    </div>
-
-    <div class="hero__stage reveal" data-d="2" aria-hidden="true">
-      <span class="stage__rays"></span>
-      <canvas class="stage__particles" id="heroParticles"></canvas>
-      <div class="stage3d" id="stage3d">
-        <span class="stage__glow"></span>
-        <span class="stage__disc"></span>
-        <span class="podium"></span>
-        <img class="hero__prod hero__prod--left" src="assets/products/magnesio.webp" alt="Citrato de Magnesio" />
-        <img class="hero__prod hero__prod--right" src="assets/products/resveratrol.webp" alt="Resveratrol Plus" />
-        <img class="hero__prod hero__prod--main" src="assets/products/omega3.webp" alt="Omega 3 1300mg" />
-        <span class="cap3d cap3d--1"></span>
-        <span class="cap3d cap3d--2"></span>
-        <span class="cap3d cap3d--3"></span>
-        <span class="cap3d cap3d--4"></span>
-        <span class="cap3d cap3d--5"></span>
+        <a class="cta__phone" data-wa="Hola WellNen, quiero hacer un pedido." href="#contacto">314 509 3256</a>
       </div>
     </div>
-  </div>
-
-  <a href="#productos" class="hero__scroll" aria-label="Ver productos">
-    <span class="hero__scroll-line"></span> productos
-  </a>
-</section>
-
-<!-- ===================== MARQUEE ===================== -->
-<div class="marquee" aria-hidden="true">
-  <div class="marquee__track">
-    <span>Colágeno Hidrolizado<i>✦</i>Omega 3<i>✦</i>100% Natural<i>✦</i>Sin Gluten<i>✦</i>Piel Radiante<i>✦</i>Más Energía<i>✦</i>Hecho con amor<i>✦</i></span>
-    <span>Colágeno Hidrolizado<i>✦</i>Omega 3<i>✦</i>100% Natural<i>✦</i>Sin Gluten<i>✦</i>Piel Radiante<i>✦</i>Más Energía<i>✦</i>Hecho con amor<i>✦</i></span>
-  </div>
-</div>
-
-<!-- ===================== PROMESA ===================== -->
-<section class="promise" id="promesa">
-  <span class="promise__glow" aria-hidden="true"></span>
-  <div class="promise__inner reveal">
-    <p class="kicker">Tu salud merece lo mejor</p>
-    <h2 class="promise__title">Más <em>energía</em> y bienestar, en cada cápsula</h2>
-    <p class="promise__lead">Suplementos de alta calidad diseñados para darte más energía, fortalecer tu organismo y ayudarte a sentirte mejor. <strong>Miles de personas</strong> ya complementan su bienestar con SAMIRA. ¡Empieza hoy a cuidar de ti! ✨</p>
-    <a class="btn btn--solid btn--lg magnetic" href="#productos">Ver los productos</a>
-  </div>
-</section>
-
-<!-- ===================== PRODUCTOS (foco principal) ===================== -->
-<section class="section products" id="productos">
-  <div class="section__head reveal">
-    <p class="kicker">Nuestros productos</p>
-    <h2 class="section__title">Elige tu <em>bienestar</em></h2>
-    <p class="section__lead">Cinco fórmulas de alta calidad para tu energía, tu corazón y tus huesos. Agrégalas a tu pedido y recíbelas en toda Colombia.</p>
-  </div>
-  <div class="products__grid" id="productGrid"></div>
-  <p class="products__note reveal">¿No sabes cuál elegir? <a data-wa="Hola SAMIRA 🌿, ¿me ayudas a elegir el producto ideal para mí?" href="#contacto">Escríbenos</a> y te asesoramos sin compromiso.</p>
-</section>
-
-<!-- ===================== STATS / SOCIAL PROOF ===================== -->
-<section class="stats" aria-label="SAMIRA en números">
-  <div class="stats__grid">
-    <div class="stat reveal" data-d="0"><span class="stat__num" data-count="5000" data-suffix="+">0</span><span class="stat__lbl">Clientes felices</span></div>
-    <div class="stat reveal" data-d="1"><span class="stat__num" data-count="4.9" data-decimals="1">0</span><span class="stat__lbl">Calificación promedio</span></div>
-    <div class="stat reveal" data-d="2"><span class="stat__num" data-count="100" data-suffix="%">0</span><span class="stat__lbl">Productos originales</span></div>
-    <div class="stat reveal" data-d="3"><span class="stat__num" data-count="24" data-suffix="h">0</span><span class="stat__lbl">Despacho exprés</span></div>
-  </div>
-</section>
-
-<!-- ===================== RESEÑAS ===================== -->
-<section class="section reviews" id="resenas">
-  <div class="section__head reveal">
-    <p class="kicker">Miles ya confían</p>
-    <h2 class="section__title">Lo que dicen <em>nuestros clientes</em></h2>
-    <p class="reviews__rating"><span class="reviews__stars">★★★★★</span> <strong>4.9 / 5</strong> · cientos de pedidos entregados</p>
-  </div>
-  <div class="testimonials__grid" id="testimonialGrid"></div>
-</section>
-
-<!-- ===================== TRUST / VENTA ===================== -->
-<section class="trust" aria-label="Por qué comprar en SAMIRA">
-  <div class="trust__grid">
-    <div class="trust__item reveal" data-d="0">
-      <span class="trust__ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17.5" cy="18" r="1.6"/></svg></span>
-      <h3>Envíos a toda Colombia</h3>
-      <p>Recíbelo en la puerta de tu casa, en cualquier ciudad del país.</p>
-    </div>
-    <div class="trust__item reveal" data-d="1">
-      <span class="trust__ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/></svg></span>
-      <h3>Pago contra entrega</h3>
-      <p>Paga al recibir en ciudades seleccionadas. También Nequi y transferencia.</p>
-    </div>
-    <div class="trust__item reveal" data-d="2">
-      <span class="trust__ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 1 1-3.2-6.4"/><path d="M4 20l1.5-3.5"/><path d="M9 11h6M9 14h4"/></svg></span>
-      <h3>Asesoría personalizada</h3>
-      <p>Te ayudamos por WhatsApp a elegir el producto ideal para ti.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== CTA / CONTACTO ===================== -->
-<section class="cta" id="contacto">
-  <span class="cta__glow" aria-hidden="true"></span>
-  <span class="leaf-float leaf-float--5" data-parallax="0.05" aria-hidden="true"></span>
-  <div class="cta__inner reveal">
-    <p class="kicker">Haz tu pedido</p>
-    <h2 class="cta__title">Pídelo hoy <em>por WhatsApp</em></h2>
-    <p class="cta__lead">Escríbenos y coordinamos tu pedido en minutos. Envíos a toda Colombia.</p>
-    <div class="cta__actions">
-      <a class="btn btn--solid btn--lg magnetic" data-wa="Hola SAMIRA 🌿, quiero hacer un pedido y conocer los precios." href="#">
-        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.07L2 22l5.07-1.33A10 10 0 1 0 12 2Zm5.5 14.2c-.23.65-1.35 1.24-1.86 1.28-.5.05-.96.23-3.23-.67-2.72-1.07-4.45-3.86-4.58-4.04-.13-.18-1.1-1.46-1.1-2.79 0-1.33.7-1.98.94-2.25.24-.27.53-.34.7-.34h.5c.16 0 .38-.06.59.45.23.56.78 1.94.85 2.08.07.14.11.3.02.48-.09.18-.13.3-.27.46l-.4.47c-.13.13-.27.28-.12.54.16.27.71 1.17 1.53 1.9 1.05.93 1.93 1.22 2.2 1.36.27.13.43.11.59-.07.16-.18.68-.79.86-1.06.18-.27.36-.22.6-.13.25.09 1.58.74 1.85.88.27.13.45.2.51.31.07.11.07.64-.16 1.29Z"/></svg>
-        Pedir por WhatsApp
-      </a>
-      <a class="btn btn--line btn--lg magnetic" id="igLink" href="https://www.instagram.com/samira.bienestar/" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 2.2c3.2 0 3.6 0 4.9.07 1.17.05 1.8.25 2.23.42.56.22.96.48 1.38.9.42.42.68.82.9 1.38.17.42.37 1.06.42 2.23.06 1.27.07 1.65.07 4.85s0 3.58-.07 4.85c-.05 1.17-.25 1.8-.42 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.17-1.06.37-2.23.42-1.27.06-1.65.07-4.85.07s-3.58 0-4.85-.07c-1.17-.05-1.8-.25-2.23-.42-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.17-.42-.37-1.06-.42-2.23C2.2 15.58 2.2 15.2 2.2 12s0-3.58.07-4.85c.05-1.17.25-1.8.42-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.17 1.06-.37 2.23-.42C8.42 2.2 8.8 2.2 12 2.2Zm0 1.8c-3.14 0-3.51.01-4.75.07-.9.04-1.38.19-1.7.32-.43.16-.74.36-1.06.68-.32.32-.52.63-.68 1.06-.13.32-.28.8-.32 1.7C3.21 9.49 3.2 9.86 3.2 13s.01 3.51.07 4.75c.04.9.19 1.38.32 1.7.16.43.36.74.68 1.06.32.32.63.52 1.06.68.32.13.8.28 1.7.32 1.24.06 1.61.07 4.75.07s3.51-.01 4.75-.07c.9-.04 1.38-.19 1.7-.32.43-.16.74-.36 1.06-.68.32-.32.52-.63.68-1.06.13-.32.28-.8.32-1.7.06-1.24.07-1.61.07-4.75s-.01-3.51-.07-4.75c-.04-.9-.19-1.38-.32-1.7a2.86 2.86 0 0 0-.68-1.06 2.86 2.86 0 0 0-1.06-.68c-.32-.13-.8-.28-1.7-.32C15.51 4.01 15.14 4 12 4Zm0 3.06A4.94 4.94 0 1 1 7.06 12 4.94 4.94 0 0 1 12 7.06Zm0 8.14A3.2 3.2 0 1 0 8.8 12 3.2 3.2 0 0 0 12 15.2Zm5.14-8.34a1.15 1.15 0 1 1-1.15-1.15 1.15 1.15 0 0 1 1.15 1.15Z"/></svg>
-        @samira.bienestar
-      </a>
-    </div>
-    <div class="cta__badges">
-      <span>🛡️ Compra 100% segura</span>
-      <span>↩️ Garantía de satisfacción</span>
-      <span>🚚 Envíos a todo el país</span>
-    </div>
-  </div>
-</section>
+  </section>
 </main>
 
-<!-- ===================== FOOTER (minimal) ===================== -->
-<footer class="footer footer--lean">
-  <div class="footer__inner">
-    <a href="#inicio" class="brand brand--footer" aria-label="SAMIRA — Bienestar desde adentro">
-      <img class="brand__img" src="assets/logo-blanco.png" alt="SAMIRA — Bienestar desde adentro" width="150" height="54"
-           onload="this.closest('.brand').classList.add('brand--has-logo')" />
-      <span class="brand__fallback" aria-hidden="true">
-        <span class="brand__mark">
-          <svg viewBox="0 0 100 120"><path d="M50 10C28 28 27 76 50 110c23-34 22-82 0-100z" fill="currentColor"/><path d="M50 20v82" stroke="#1b2a21" stroke-width="3.4" fill="none" stroke-linecap="round"/><path d="M50 46c-8-2-13 0-18 6M50 64c8-2 13 0 18 6" stroke="#1b2a21" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
-        </span>
-        <span class="brand__text">SAMIRA<small>BIENESTAR DESDE ADENTRO</small></span>
-      </span>
-    </a>
-    <nav class="footer__links" aria-label="Enlaces">
-      <a data-wa="Hola SAMIRA 🌿, quiero hacer un pedido." href="#">WhatsApp</a>
-      <a href="https://www.instagram.com/samira.bienestar/" target="_blank" rel="noopener">Instagram</a>
+<footer class="footer">
+  <div class="wrap footer__in">
+    <div class="footer__brand">
+      <img src="assets/brand/wellnen-logo-claro.webp" alt="WellNen · Bienestar, energía y equilibrio" width="900" height="219" loading="lazy" />
+    </div>
+    <nav class="footer__nav" aria-label="Tienda">
+      <p class="footer__h">Tienda</p>
       <a href="#productos">Productos</a>
+      <a href="#como-pedir">Cómo pedir</a>
     </nav>
+    <div class="footer__nav">
+      <p class="footer__h">Contacto</p>
+      <a data-wa="Hola WellNen, quiero hacer un pedido." href="#contacto">WhatsApp 314 509 3256</a>
+      <a id="igLink" href="#" target="_blank" rel="noopener">Instagram</a>
+    </div>
   </div>
-  <div class="footer__bottom">
-    <p>© <span id="year">2026</span> SAMIRA · Bienestar desde adentro</p>
-    <p class="footer__made">Hecho con <svg viewBox="0 0 24 24" width="14" height="14" aria-label="amor"><path fill="#C2A36B" d="M12 21s-7-4.5-9.3-9.2C1.1 8.4 3 5 6.3 5c1.9 0 3.2 1 3.7 2.1C10.5 6 11.8 5 13.7 5 17 5 18.9 8.4 21.3 11.8 19 16.5 12 21 12 21Z"/></svg> en Colombia</p>
+  <div class="wrap footer__base">
+    <p>Los suplementos dietarios no son medicamentos y no reemplazan una alimentación balanceada ni la consulta médica.</p>
+    <p>© <span id="year">2026</span> WellNen</p>
   </div>
 </footer>
 
-<!-- ===================== CARRITO ===================== -->
+<!-- WhatsApp flotante -->
+<a class="wa-float" data-wa="Hola WellNen, quiero información sobre sus suplementos." href="#contacto" aria-label="Escríbenos por WhatsApp">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg>
+</a>
+
+<!-- Pedido (carrito) -->
 <div class="cart" id="cart" aria-hidden="true">
   <div class="cart__overlay" id="cartOverlay"></div>
-  <aside class="cart__panel" role="dialog" aria-label="Tu pedido" aria-modal="true">
+  <aside class="cart__panel" role="dialog" aria-modal="true" aria-labelledby="cartTitle">
     <div class="cart__head">
-      <h3>Tu pedido</h3>
-      <button class="cart__close" id="cartClose" aria-label="Cerrar">
-        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>
+      <h2 class="cart__title" id="cartTitle">Tu pedido</h2>
+      <button class="cart__close" id="cartClose" type="button" aria-label="Cerrar pedido">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-x"/></svg>
       </button>
     </div>
     <div class="cart__items" id="cartItems"></div>
     <div class="cart__empty" id="cartEmpty">
-      <span class="cart__empty-ico" aria-hidden="true">🛒</span>
-      <p>Tu carrito está vacío</p>
-      <span>Agrega tus productos y te armamos el pedido al instante.</span>
+      <p>Aún no agregas productos.</p>
+      <a class="btn btn--line" href="#productos" id="cartBrowse">Ver productos</a>
     </div>
     <div class="cart__foot" id="cartFoot" hidden>
       <div class="cart__total"><span>Total</span><strong id="cartTotal">$0</strong></div>
-      <a class="btn btn--solid btn--lg cart__checkout magnetic" id="cartCheckout" href="#" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.07L2 22l5.07-1.33A10 10 0 1 0 12 2Zm5.5 14.2c-.23.65-1.35 1.24-1.86 1.28-.5.05-.96.23-3.23-.67-2.72-1.07-4.45-3.86-4.58-4.04-.13-.18-1.1-1.46-1.1-2.79 0-1.33.7-1.98.94-2.25.24-.27.53-.34.7-.34h.5c.16 0 .38-.06.59.45.23.56.78 1.94.85 2.08.07.14.11.3.02.48-.09.18-.13.3-.27.46l-.4.47c-.13.13-.27.28-.12.54.16.27.71 1.17 1.53 1.9 1.05.93 1.93 1.22 2.2 1.36.27.13.43.11.59-.07.16-.18.68-.79.86-1.06.18-.27.36-.22.6-.13.25.09 1.58.74 1.85.88.27.13.45.2.51.31.07.11.07.64-.16 1.29Z"/></svg>
-        Pedir por WhatsApp
+      <a class="btn btn--primary btn--block" id="cartCheckout" href="#" target="_blank" rel="noopener">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg> Enviar pedido por WhatsApp
       </a>
-      <p class="cart__note">Envíos a toda Colombia · Pago contra entrega</p>
+      <p class="cart__note">Envío gratis a toda Colombia · Pago contra entrega</p>
     </div>
   </aside>
 </div>
 
-<!-- ===================== FLOATING ===================== -->
-<a class="wa-float" id="waFloat" data-wa="Hola SAMIRA 🌿, quiero más información sobre sus productos." href="#" aria-label="Escríbenos por WhatsApp">
-  <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.07L2 22l5.07-1.33A10 10 0 1 0 12 2Zm5.5 14.2c-.23.65-1.35 1.24-1.86 1.28-.5.05-.96.23-3.23-.67-2.72-1.07-4.45-3.86-4.58-4.04-.13-.18-1.1-1.46-1.1-2.79 0-1.33.7-1.98.94-2.25.24-.27.53-.34.7-.34h.5c.16 0 .38-.06.59.45.23.56.78 1.94.85 2.08.07.14.11.3.02.48-.09.18-.13.3-.27.46l-.4.47c-.13.13-.27.28-.12.54.16.27.71 1.17 1.53 1.9 1.05.93 1.93 1.22 2.2 1.36.27.13.43.11.59-.07.16-.18.68-.79.86-1.06.18-.27.36-.22.6-.13.25.09 1.58.74 1.85.88.27.13.45.2.51.31.07.11.07.64-.16 1.29Z"/></svg>
-  <span class="wa-float__pulse"></span>
-</a>
-<button class="totop" id="toTop" aria-label="Volver arriba">
-  <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="m6 14 6-6 6 6"/></svg>
-</button>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<!-- Íconos -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2Zm0 18.15c-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 4.54 0 8.24 3.7 8.24 8.24 0 4.55-3.7 8.24-8.24 8.24Zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.17.24-.64.8-.78.97-.15.17-.29.18-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.43.12-.15.17-.25.25-.42.08-.17.04-.31-.02-.43-.06-.13-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.22.25-.86.85-.86 2.07 0 1.22.89 2.39 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.11-.22-.17-.47-.29Z"/></symbol>
+  <symbol id="i-bag" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M5 8h14l-1.2 12.5H6.2L5 8Z"/><path d="M9 10V7a3 3 0 0 1 6 0v3" stroke-linecap="round"/></g></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5 10 17 19 7.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-bienestar" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M16 25c-2.6-2.3-3.6-5.6-2.8-9.4.5-2.2 1.5-4.1 2.8-5.6 1.3 1.5 2.3 3.4 2.8 5.6.8 3.8-.2 7.1-2.8 9.4Z"/><path d="M15.2 25C11 25 7.4 22.4 6 18.4c3-.6 5.8.2 7.6 1.9"/><path d="M16.8 25c4.2 0 7.8-2.6 9.2-6.6-3-.6-5.8.2-7.6 1.9"/><path d="M8 27.5h16"/></g></symbol>
+  <symbol id="i-energia" viewBox="0 0 32 32"><path d="M18.2 4 8.5 18h6.6l-1.4 10L23.5 14H17l1.2-10Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+  <symbol id="i-equilibrio" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="1.6"><ellipse cx="16" cy="24" rx="9" ry="3.4"/><ellipse cx="16" cy="16.6" rx="6.4" ry="2.9"/><ellipse cx="16" cy="10" rx="4" ry="2.3"/></g></symbol>
+</svg>
 
 <script src="script.js"></script>
 </body>
