@@ -22,7 +22,7 @@ const PRODUCTS = [
       "Con resveratrol, un antioxidante de origen vegetal.",
       "Fórmula liposomal en gomitas masticables.",
       "1.500 mg por porción (2 gomitas).",
-    ], price:65000, oldPrice:85000 },
+    ], price:70000, oldPrice:85000 },
   { id:"omega3", img:"omega3.webp", w:414, name:"Omega 3", pillar:"Bienestar",
     hook:"El básico que tu rutina necesita.",
     line:"Para tu corazón, tu mente y tu día a día, en una gomita masticable con relleno líquido.",
@@ -31,7 +31,7 @@ const PRODUCTS = [
       "Ayuda a cuidar la salud de tu corazón.",
       "Apoya la memoria y la concentración.",
       "Fácil de tomar: gomita con relleno líquido.",
-    ], price:65000, oldPrice:85000 },
+    ], price:70000, oldPrice:85000 },
   { id:"magnesio-potasio", img:"magnesio-potasio.webp", w:452, name:"Magnesio y Potasio 5 en 1", pillar:"Equilibrio",
     hook:"Menos calambres, más rendimiento.",
     line:"Cinco fuentes de magnesio y potasio para tus músculos, antes y después del ejercicio.",
@@ -40,7 +40,7 @@ const PRODUCTS = [
       "Apoya la recuperación después de la actividad física.",
       "Apoya la hidratación y el equilibrio mineral.",
       "Citrato, glicinato y cloruro de magnesio; citrato y cloruro de potasio.",
-    ], price:65000, oldPrice:85000 },
+    ], price:70000, oldPrice:85000 },
 ];
 
 const ICON = { "Bienestar":"#i-bienestar", "Energía":"#i-energia", "Equilibrio":"#i-equilibrio" };
